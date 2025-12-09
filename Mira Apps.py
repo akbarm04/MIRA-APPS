@@ -2,7 +2,7 @@ import function as fc
 
 loop = True
 while loop:
-    with open("data_user.txt", "r") as file:
+    with open("MIRA-APPS/data_user.txt", "r") as file:
         lines = file.readlines()
 
     data_user = []
@@ -45,7 +45,7 @@ while loop:
         new_username = input("Masukkan Username: ")
         new_password = input("Masukkan Password: ")
         new_data_user = f"{new_username} {new_email} {new_password}"
-        with open ("data_user.txt", "a") as file:
+        with open ("MIRA-APPS/data_user.txt", "a") as file:
             file.write(f"{new_data_user}\n")
         print("\nSign Up berhasil")
     elif (pilih == "3"):
