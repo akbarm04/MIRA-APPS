@@ -2,9 +2,9 @@
 
 📱 **Project Description**  
 **MIRA-APPS** is a recipe application developed as a collaborative project for the following courses:
-- **LTIK (Logic and Computer Engineering Techniques)**
-- **Daspro (Programming Fundamentals)**
-- **PRPL (Software Programming)**  
+- **LTIK (Literasi Teknologi Informasi & Komunikasi)**
+- **Daspro (Programming basic)**
+- **PRPL (Pengantara Rekayasa Perangkat Lunak)**  
 
 The app is designed to help users easily find, save, and manage various recipes through an intuitive and user-friendly interface.
 
