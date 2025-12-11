@@ -1,8 +1,9 @@
-Ayam: Ayam Kecap, Ayam Katsu, Ayam Goreng marinasi (done)
-Sapi: Dendeng Sapi Pedas,
-Kentang: Perkedel Kentang, Mashed Potatto Creamy Garlic,
-Tempe: Tempe Goreng tepung, Tempe Orek
-Tahu: Pepes Tahu
+Ayam: Ayam Kecap, Ayam Katsu, Ayam Goreng marinasi (3)
+Sapi: Dendeng Sapi Pedas, Semur Daging Sapi Khas Medan, Tumis Daging Sapi Sederhana (3)
+Kentang: Perkedel Kentang, Mashed Potatto Creamy Garlic, Sambal Goreng Kentang (3)
+Tempe: Tempe Goreng tepung, Tempe Orek, Kering Tempe (3)
+Tahu: Pepes Tahu, Semur Tahu Sederhana (3)
+Telur: Telur Balado, Semur Telur
 
 #RESEP: Ayam Kecap
 #BAHAN-BAHAN:
@@ -95,6 +96,33 @@ Tahu: Pepes Tahu
 7. tambahkan garam dan lada secukupnya, aduk lagi sampai teksturnya creamy
 8. sajikan selagi hangat
 
+#RESEP: Sambal Goreng Kentang
+#BAHAN-BAHAN:
+bumbu halus:
+50 ml Air
+12 butir bawang merah
+5 siung bawang putih
+7 buah cabai rawit
+5 buah cabai merah
+1/4 sdt garam
+1/2 sdt kaldu bubuk
+1 sdm gula: pasir
+bumbu utuh
+1 sdm air asam jawa
+2 lembar daun jeruk, sobek-sobek
+1 lembar daun salam
+1 cm lengkuas, memarkan
+1 batang serai, memarkan
+7 buah cabai rawit, iris serong
+1 sdm gula merah, sisir
+1 bungkus santan instan
+#LANGKAH-LANGKAH:
+1. Blender bumbu hingga halus, jika ingin lebih sedap, ulek menggunakan tangan hingga halus lalu tambahkan air terakhir.
+2. Panaskan minyak secukupnya (kurang lebih 3 sdm), tumis bumbu halus hingga harum.
+3. Jika sudah setengah matang, masukkan cabai iris, serai, daun jeruk, lengkuas dan daun salam. Tumis terus hingga bumbu matang. Tes rasa, jika bumbu sudah tidak langu, berarti bumbu sudah matang.
+4. Tuang air asam jawa dan santan instan. Masak lagi hingga bumbu matang.
+5. Tes rasa, jika rasanya sudah pas, masukkan kentang, ampela ati dan pete yang sudah digoreng matang. Aduk rata dengan bumbu dan tunggu hingga bumbu meresap. Angkat.
+
 #RESEP: Dendeng Sapi Pedas
 #BAHAN-BAHAN:
 1. 350 g daging Sapi
@@ -105,6 +133,51 @@ Tahu: Pepes Tahu
 1. iris tipis daging sapi
 2. tambahkan bumbu marinasi, bawang putih bubuk, dan chilli flakes. aduk rata.
 3. susun di loyang panggangan. panggang selama 40 menit dengan suhu 200 derajat celcius api atas bawah atau sampapi dagingnya matang dan krispi
+
+#RESEP: Semur Daging Sapi Khas Medan
+#BAHAN-BAHAN:
+500 gr daging sapi sengkel, potong-potong
+5 butir bawang merah, iris tipis
+2 buah tomat ukuran kecil, parut
+5 butir cengkeh, memarkan
+3 cm kayu manis
+6 sdm kecap manis Bango
+3/4 sdt garam
+1/4 sdt merica bubuk putih
+3/4 sdt pala bubuk
+1 liter santan kental
+2 sdm minyak, untuk menumis
+Bumbu Halus:
+5 buah cabai keriting merah
+4 butir kemiri, sangrai
+2 cm jahe
+4 siung bawang putih
+#LANGKAH-LANGKAH:
+1. Goreng sebentar daging. Angkat. Sisihkan.
+2. Tumis bawang merah bersama bumbu halus sampai harum. Masukkan tomat. Aduk sampai layu.
+3. Tambahkan daging, cengkih, dan kayu manis. Aduk sebentar.
+4. Masukkan kecap manis Bango, garam, lada putih bubuk, dan pala bubuk. Aduk sampai daging berbalut kecap.
+5. Tuangkan santan sedikit demi sedikit sampai daging empuk. Sajikan bersama taburan bawang goreng
+
+#RESEP: Tumis Daging Sapi Sederhana
+#BAHAN-BAHAN:
+300 gram daging sapi, iris tipis
+3 sdm Kecap Manis Bango
+2 sdm minyak goreng
+3 siung bawang putih, cincang halus
+5 butir bawang merah, iris tipis
+1 buah cabai merah, iris serong (opsional)
+1 sdm saus tiram
+1/2 sdt merica bubuk
+1/2 sdt garam
+100 ml air
+LANGKAH-LANGKAH:
+Panaskan minyak dalam wajan, tumis bawang putih dan bawang merah hingga harum.
+Masukkan irisan daging sapi, aduk hingga berubah warna.
+Tambahkan Kecap Manis Bango, saus tiram, garam, dan merica bubuk. Aduk rata.
+Tuangkan air, masak hingga daging empuk dan bumbu meresap.
+Tambahkan cabai merah, aduk sebentar, lalu angkat dan sajikan.
+
 
 #RESEP: Tempe Goreng tepung
 #BAHAN-BAHAN:
@@ -124,6 +197,51 @@ kencur
 2. Lalu tambah air secara bertahap sambil di aduk hingga tercampir rata dan tidak bergerindil
 3. Panaskan minyak dalam wajan lalu celupkan tempe dalam adonan tepung lalu goreng
 4. goreng hingga warnanya kekuningan dan matang lalu angkat dan tiriskan,lalu sajikan
+
+
+#RESEP: Tempe Orek
+#BAHAN-BAHAN:
+2 papan tempe, potong-potong
+1 batang serai, memarkan
+2 lembar daun salam
+Seruas jari lengkuas
+4 lembar daun jeruk
+Garam
+merica  bubuk
+kecap manis secukupnya
+Sedikit kaldu ayam bubuk
+4 siung bawang putih 7 butir bawang merah 4 butir kemiri 1 sdm gula merah sisir (haluskan)
+#LANGKAH-LANGKAH:
+1. Goreng tempe sampai kecoklatan. Angkat dan sisihkan.
+2. Tumis bumbu halus sampai harum. Masukkan garam, kaldu bubuk, merica bubuk, dan kecap manis, aduk rata.
+3. Masukkan tempe, aduk rata (tambahkan sedikit air bila perlu). Masak hingga bumbu meresap. Angkat.
+
+#RESEP:Kering Tempe
+#BAHAN-BAHAN:
+- 2 papan Tempe iris agak tipis
+- 3 lembar daun jeruk
+- 3 cm lengkuas geprek
+- 1 batang serai
+- Kacang goreng secukupnya
+- Bumbu halus
+- 3 siung bawang putih
+- 5 siung bawang merah
+- 2 lembar daun jeruk
+- 3 biji cabe keriting
+- 1 biji cabe merah besar
+- 7 biji cabe rawit
+- Gula merah secukupnya
+- 2 sdm gula pasir (optional)
+- Kecap
+- Garam
+- Penyedap rasa
+#LANGKAH-LANGKAH:
+1. Tempe digoreng hingga kering.
+2. Haluskan bumbu kemudian tumis hingga wangi, tambahkan lengkuas, serai, dan daun jeruk.
+3. Bumbui serta tambahkan gula merah dan sedikit air.
+4. Masak hingga mengental.
+5. Matikan api, kemudian masukan tempe dan kacang aduk hingga rata.
+6. Tunggu dingin dan siap disimpan di dalam toples kedap udara.
 
 #RESEP: Pepes tahu
 #BAHAN-BAHAN:
@@ -145,19 +263,74 @@ tusuk gigi
 2. Siapkan daun pisang lalu masukan 1 sendok sayur adonan lalu beri cabe rawit setelah itu tutup sematkan dgn tusuk gigi. kukus selama 25 menit
 3. sajikan
 
+#RESEP: Semur Tahu Sederhana
+#BAHAN-BAHAN:
+2 buah (450 g) tahu kuning ukuran sedang, potong kotak
+6 butir bawang merah, iris tipis
+2 siung bawang putih, iris tipis
+2 lembar daun salam
+2 cm lengkuas, memarkan
+3 buah cabai merah biasa ukuran besar, iris serong
+6 buah cabai rawit merah, iris tipis
+7 sdm kecap manis Bango
+1/4 sdt garam
+1/4 sdt lada putih bubuk
+300 ml air
+2 sdm minyak goreng untuk menumis
+#LANGKAH-LANGKAH:
+Tumis bawang merah, bawang putih, daun salam, lengkuas sampai harum.
+Masukkan cabe merah dan cabe rawit. Aduk rata. Masak sampai setengah layu. Tambahkan tahu putih. Aduk rata.
+Masukkan Kecap Manis Bango, garam, lada putih bubuk, dan pala bubuk. Aduk rata.
+Tuang air. Masak sampai matang, meresap, dan kuah kental.
+
+#RESEP:Telur Balado
+#BAHAN-BAHAN:
+6 butir telur ayam
+1.5 L air
+100 ml air
+250 ml minyak untuk menumis
+bumbu halus:
+3 siung bawang putih
+6 butir bawang merah
+10 buah cabai merah
+5 buah cabai merah keriting
+1 butir kemiri, sangrai
+2 buah tomat, buang biji
+1 sdt Royco Kaldu Ayam
+2 sdm Bango Kecap Manis
+#LANGKAH-LANGKAH:
+1. Haluskan semua bumbu, termasuk Royco Kaldu Ayam dan Bango Kecap Manis dengan blender.
+2. Panaskan air di panci hingga mendidih. Rebus telur selama 7 menit. Tiriskan lalu rendam dalam air dingin selama 5 menit. Kupas telur yang sudah dingin.
+3. Panaskan minyak di wajan dengan api sedang. Goreng telur yang sudah dikupas hingga bagian luarnya berwarna kekuningan. Angkat dan tiriskan.
+4. Tumis bumbu halus dengan 3 sdm minyak hingga harum. Masukkan telur yang sudah digoreng, aduk rata. Tambahkan Bango Kecap Manis dan air, lalu masak hingga bumbu meresap.
+5. Angkat dan sajikan dengan daun peterseli. Telur balado cocok dijadikan bahan pelengkap untuk nasi uduk, nasi kuning sesuai selera.
+
+#RESEP: Semur Telur
+#BAHAN-BAHAN:
+5 butir telur ayam
+100 g tahu, potong dadu
+minyak secukupnya
+4 sdm kecap manis (sesuai selera)
+2 lembar daun salam
+2 buah cabai keriting, potong-potong
+1 batang serai, memarkan
+1 sdm gula merah
+1 cm lengkuas, memarkan
+Kaldu bubuk dan garam secukupnya
+bumbu halus:
+7 siung bawang merah
+4 siung bawang putih
+4 butir kemiri
+1/2 sdt merica butir
+1/4 butir pala, memarkan atau parut
+1/4 sdt ketumbar butir
+#LANGKAH-LANGKAH:
+Rebus telur ayam, kupas, kerat sedikit bagian putihnya agar tidak meletus saat digoreng. Goreng tahu hingga berkulit kecokelatan, tiriskan.
+Goreng hingga kulit luarnya kekuningan. Angkat dan tiriskan.
+Tumis bumbu halus hingga harum, masukkan cabai, daun salam, serai, lengkuas. Masak hingga bumbu matang.
+Tuang air secukupnya. Tunggu hingga mendidih, masukkan telur dan tahu goreng. Aduk rata.
+Masukkan gula merah, kecap manis, garam dan kaldu bubuk secukupnya. Masak hingga mendidih, tes rasa, jika sudah sesuai selera, angkat.
+
 #RESEP:
 #BAHAN-BAHAN:
-2 papan tempe, potong-potong
-1 batang serai, memarkan
-2 lembar daun salam
-Seruas jari lengkuas
-4 lembar daun jeruk
-Garam
-merica  bubuk
-kecap manis secukupnya
-Sedikit kaldu ayam bubuk
-4 siung bawang putih 7 butir bawang merah 4 butir kemiri 1 sdm gula merah sisir (haluskan)
 #LANGKAH-LANGKAH:
-1. Goreng tempe sampai kecoklatan. Angkat dan sisihkan.
-2. Tumis bumbu halus sampai harum. Masukkan garam, kaldu bubuk, merica bubuk, dan kecap manis, aduk rata.
-3. Masukkan tempe, aduk rata (tambahkan sedikit air bila perlu). Masak hingga bumbu meresap. Angkat.
