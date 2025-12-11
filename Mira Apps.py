@@ -2,7 +2,7 @@ import function as fc
 
 loop = True
 while loop:
-    with open("MIRA-APPS/data_user.txt", "r") as file:
+    with open("data_user.txt", "r") as file:
         lines = file.readlines()
 
     data_user = []
@@ -45,7 +45,7 @@ while loop:
         new_username = input("Masukkan Username: ")
         new_password = input("Masukkan Password: ")
         new_data_user = f"{new_username} {new_email} {new_password}"
-        with open ("MIRA-APPS/data_user.txt", "a") as file:
+        with open ("data_user.txt", "a") as file:
             file.write(f"{new_data_user}\n")
         print("\nSign Up berhasil")
     elif (pilih == "3"):
@@ -56,4 +56,5 @@ while loop:
 
 while True:
     print("\nSelamat datang di Mira Apps\nMy Intelligence Recipe Assistant")
+    print("1. Mencari resep\n2. Menulis resep\n3. Keluar ")
     break
