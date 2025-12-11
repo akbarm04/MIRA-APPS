@@ -1,7 +1,7 @@
 import function as fc
 
-loop = True
-while loop:
+awal = True
+while awal:
     with open("data_user.txt", "r") as file:
         lines = file.readlines()
 
@@ -23,12 +23,11 @@ while loop:
             if index_email != -1:
                 if email == data_user[index_email][1] and password == data_user [index_email][2]:
                     print("Selamat anda berhasil Login")
-
-                    loop = False
+                    lanjut = True
+                    awal = False
                     break
                 else:
                     print("Password salah")
-                    continue
             else:
                 print("Email tidak ditemukan\n")
                 break
@@ -50,11 +49,15 @@ while loop:
         print("\nSign Up berhasil")
     elif (pilih == "3"):
         print("Selamat Tinggal")
+        lanjut = False
         break
     else:
         print("Pilihan tidak ditemukan")
 
-while True:
-    print("\nSelamat datang di Mira Apps\nMy Intelligence Recipe Assistant")
-    print("1. Mencari resep\n2. Menulis resep\n3. Keluar ")
-    break
+while lanjut:
+    print(f"\nHalo {data_user[index_email][0]}, Selamat datang di Mira Apps\nMy Intelligence Recipe Assistant\n Apa yang ingin kamu lakukan sekarang?")
+    print("1. Mencari resep\n2. Menulis resep\n3. Keluar")
+    pilih_menu = input("Pilihanmu: ")
+
+    if pilih_menu == 1:
+        print("Silahkan pilih bahan dasar yang anda miliki:\n 1.")
