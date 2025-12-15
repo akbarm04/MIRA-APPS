@@ -1,4 +1,4 @@
-Daging = ["Ayam", "Sapi", "Kambing", "Rusa", "Domba"]
+Daging = ["Ayam", "Sapi", "Kambing"]
 Protein = ["Tahu", "Tempe", "Telur"]
 Sayur = ["Kentang", "Kangkung", "Sawi", "Selada", "Cabai"]
 Fungi = ["Jamu Enoki", "Jamur Tiram"]
