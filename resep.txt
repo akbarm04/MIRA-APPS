@@ -3,7 +3,7 @@ Sapi: Dendeng Sapi Pedas, Semur Daging Sapi Khas Medan, Tumis Daging Sapi Sederh
 Kentang: Perkedel Kentang, Mashed Potatto Creamy Garlic, Sambal Goreng Kentang (3)
 Tempe: Tempe Goreng tepung, Tempe Orek, Kering Tempe (3)
 Tahu: Pepes Tahu, Semur Tahu Sederhana (3)
-Telur: Telur Balado, Semur Telur
+Telur: Telur Balado, Semur Telur, Telur Orak-arik (3)
 
 #RESEP: Ayam Kecap
 #BAHAN-BAHAN:
@@ -15,9 +15,10 @@ Telur: Telur Balado, Semur Telur
 6. secukupnya Gula, garam dan kaldu bubuk
 7. 2 lembar daun salam
 8. Secukupnya air
-9. 5 siung bawang merah (haluskan)
-10. 3 siung bawang putih (haluskan)
-#LANGKAH-LANGKAH
+bumbu halus:
+1. 5 siung bawang merah
+2. 3 siung bawang putih
+#LANGKAH-LANGKAH:
 1. Cuci bersih ayam, rebus selama 5 menit dengan 2 lembar daun salam. Sisihkan.
 2. Tumis bumbu halus dan irisan bawang bombai sampai harum dan matang.
 3. Tambahkan ayam, aduk rata. Masukkan air.
@@ -37,12 +38,12 @@ Telur: Telur Balado, Semur Telur
 9. 1 sdm susu UHT
 10. tepung panir secukupnya
 #LANGKAH-LANGKAH:
-1. iris tipis ayam fillet, masukkan semua bumbu dan susu, aduk rata lalu diamkan minimal 30 menit.
-2. balur ayam yang sudah di marinasi dengan tepung terigu, (tipis saja)
-3. kocok 1 butir telur (putihnya saja), 1 sdm susu UHT, masukkan ayam yang sudah dibalur dengan tepung terigu tadi kedalam kocokan telur
-4. balur dengan tepung panir, lalu goreng
+1. Iris tipis ayam fillet, masukkan semua bumbu dan susu, aduk rata lalu diamkan minimal 30 menit.
+2. Balur ayam yang sudah di marinasi dengan tepung terigu, (tipis saja)
+3. Kocok 1 butir telur (putihnya saja), 1 sdm susu UHT, masukkan ayam yang sudah dibalur dengan tepung terigu tadi kedalam kocokan telur
+4. Balur dengan tepung panir, lalu goreng
 
-#RESEP: Ayam Goreng marinasi
+#RESEP: Ayam Goreng Marinasi
 #BAHAN-BAHAN:
 1. 1 kg ayam potong, bagian sayap dan paha
 2. 1 bungkus bumbu marinasi
@@ -65,16 +66,14 @@ Telur: Telur Balado, Semur Telur
 4. 1 buah kuning telur
 5. 1 buah daun bawang, iris halus
 6. 1 batang daun seledri, cincang halus
-7. secukupnya Gula pasir
-8. secukupnya Garam
+7. Secukupnya Gula pasir
+8. Secukupnya Garam
 9. 1 sdt Merica bubuk
 10. Bahan celupan:
 11. 1 buah putih telur, kocok lepas
 #LANGKAH-LANGKAH:
 1. Kupas kentang, cuci bersih, potong2 lalu goreng bersama bawang merah dan bawang putih, tiriskan
-2. Lalu Haluskan bawang merah dan bawang putih, sisihkan
-    Haluskan kentang goreng (saya taruh di cobek dan saya haluskan)
-    Pindahkan kedalam baskom tambahkan kuning telur, bawang merah bawang putih halus, gula, garam, daun bawang, merica
+2. Lalu Haluskan bawang merah dan bawang putih, sisihkan. Haluskan kentang goreng (saya taruh di cobek dan saya haluskan). Pindahkan kedalam baskom tambahkan kuning telur, bawang merah bawang putih halus, gula, garam, daun bawang, merica
 3. Aduk rata Bentuk bulat2 pipih (sekitar 2 sdm perbuah)
 4. Celup kedalam kocokan putih telur Goreng sampai kuning keemasan. Sajikan.
 
@@ -83,34 +82,34 @@ Telur: Telur Balado, Semur Telur
 1. 3 buah ukuran sedang
 2. 2 sdm margarin
 3. 50-100 ml susu cair (full cream)
-4. garam secukupnya
+4. Garam secukupnya
 5. 1 siung bawang putih
-6. lada bubuk secukupnya
-#LANGKAH-LANGKAH
-1. kupas dan potong kentang jadi ukuran kecil agar cepat empuk
-2. rebus kentang dalam air mendidih yangsudah diberi sedikit garam sampai benar-benar empuk (10-15 menit)
-3. tiriskan kentang lalu haluskan selagi panas dengan garpu atau alat tumbuk
-4. di wajan kecil, lelehkan margariiiin, lalu tuumis bawang putih sampai harum dan keemasan
-5. tuang susu cair ke wajan tumisan bawang putih, aduk rata, biarkan hangat (jangan sampai mendidih)
-6. masukkan kentang halus ke dalam campuran susu-bawa putih tadi, aduk rata dengan lembut
-7. tambahkan garam dan lada secukupnya, aduk lagi sampai teksturnya creamy
-8. sajikan selagi hangat
+6. Lada bubuk secukupnya
+#LANGKAH-LANGKAH:
+1. Kupas dan potong kentang jadi ukuran kecil agar cepat empuk
+2. Rebus kentang dalam air mendidih yangsudah diberi sedikit garam sampai benar-benar empuk (10-15 menit)
+3. Tiriskan kentang lalu haluskan selagi panas dengan garpu atau alat tumbuk
+4. Di wajan kecil, lelehkan margariiiin, lalu tumis bawang putih sampai harum dan keemasan
+5. Tuang susu cair ke wajan tumisan bawang putih, aduk rata, biarkan hangat (jangan sampai mendidih)
+6. Masukkan kentang halus ke dalam campuran susu-bawa putih tadi, aduk rata dengan lembut
+7. Tambahkan garam dan lada secukupnya, aduk lagi sampai teksturnya creamy
+8. Sajikan selagi hangat
 
 #RESEP: Sambal Goreng Kentang
 #BAHAN-BAHAN:
 bumbu halus:
-50 ml Air
-12 butir bawang merah
-5 siung bawang putih
-7 buah cabai rawit
-5 buah cabai merah
-1/4 sdt garam
-1/2 sdt kaldu bubuk
-1 sdm gula: pasir
-bumbu utuh
-1 sdm air asam jawa
-2 lembar daun jeruk, sobek-sobek
-1 lembar daun salam
+1. 50 ml Air
+2. 12 butir bawang merah
+3. 5 siung bawang putih
+4. 7 buah cabai rawit
+5. 5 buah cabai merah
+6. 1/4 sdt garam
+7. 1/2 sdt kaldu bubuk
+8. 1 sdm gula: pasir
+bumbu utuh:
+1. 1 sdm air asam jawa
+2. 2 lembar daun jeruk, sobek-sobek
+3. 1 lembar daun salam
 1 cm lengkuas, memarkan
 1 batang serai, memarkan
 7 buah cabai rawit, iris serong
@@ -283,6 +282,23 @@ Masukkan cabe merah dan cabe rawit. Aduk rata. Masak sampai setengah layu. Tamba
 Masukkan Kecap Manis Bango, garam, lada putih bubuk, dan pala bubuk. Aduk rata.
 Tuang air. Masak sampai matang, meresap, dan kuah kental.
 
+#RESEP: Tahu Bacem
+#BAHAN-BAHAN:
+1. 4 potong tahu
+2. 1 sdm ketumbar
+3. 3 siung bawang putih
+4. 2 sdm gula.merah
+5. 2 cm lengkuas
+6. 1 ruas asam jawa
+7. 6 siung bawang merah
+8. secukupnya garam
+9. secukupnya air
+10. secukupnya minyak untuk.menggoreng
+#LANGKAH-LANGKAH:
+1. Haluskan semua bumbu kecuali asam jawa (cukup rendaman airnya), masukkan kedalam tahu yangs udh disiapkan dipanci kecil.
+2. Tambahkan air, kemudian rebus hingga air menyusut. Lalu goreng dengan api sedang.
+3. Tahu bacem siap disajikan dengan sambal dan nasi hangat, selamat mencoba.
+
 #RESEP:Telur Balado
 #BAHAN-BAHAN:
 6 butir telur ayam
@@ -331,6 +347,18 @@ Tumis bumbu halus hingga harum, masukkan cabai, daun salam, serai, lengkuas. Mas
 Tuang air secukupnya. Tunggu hingga mendidih, masukkan telur dan tahu goreng. Aduk rata.
 Masukkan gula merah, kecap manis, garam dan kaldu bubuk secukupnya. Masak hingga mendidih, tes rasa, jika sudah sesuai selera, angkat.
 
-#RESEP:
+#RESEP: Telur Orak-arik
 #BAHAN-BAHAN:
+1. 3 butir telur
+2. 1 ½ sendok makan susu cair
+3. 1 ¾ sendok teh tepung maizena
+4. 3 sendok makan mentega tawar
+5. garam secukupnya
 #LANGKAH-LANGKAH:
+1. Pecahkan tiga butir telur ke dalam mangkuk berukuran sedang.
+2. Pada mangkuk terpisah, campurkan susu dan tepung maizena hingga tercampur rata.
+3. Tambahkan campuran susu dan tepung maizena ke dalam mangkuk yang berisi telur.
+4. Tambahkan sedikit garam sambil terus dikocok lepas. Panaskan teflon dengan suhu api tinggi hingga panas, lalu tuang mentega hingga meleleh.
+5. Masukkan campuran telur ke dalam teflon. Tunggu selama tiga detik tanpa diaduk sampai bagian tepi telur mulai meluap.
+6. Kecilkan api dan mulailah mengaduk telur dengan membuat gerakan lingkaran penuh. Teruslah mengaduk hingga mentega meresap ke dalam telur orak-arik.
+7. Angkat telur dari teflon sebelum warnanya  berubah menjadi kecokelatan.
