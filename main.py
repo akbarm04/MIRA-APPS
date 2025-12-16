@@ -1,5 +1,15 @@
-import function as fc
+def cari_index_email(list, cari):
+    for i in range(len(list)):
+        if list[i][1] == cari:
+            return i
+    return -1
 
+def cek_at(email):
+    if "@" in email:
+        return True
+    else:
+        return False
+    
 #fungsi ambil data user dari file
 def ambildata():
     with open("data_user.txt", "r") as file:
@@ -16,7 +26,7 @@ def login():
         print("\nLakukan Login")
         email = input("Masukkan Email: ")
         password = input("Masukkan Password: ")
-        index_email = fc.cari_index_email(data_user, email)
+        index_email = cari_index_email(data_user, email)
             
         if index_email != -1:
             if email == data_user[index_email][1] and password == data_user [index_email][2]:
@@ -34,12 +44,12 @@ def signup():
     while True:
         print("\nLakukan Sign Up")
         new_email = input("Masukkan Email: ")
-        cek_at = fc.cek_at(new_email)
-        confirm = fc.cari_index_email(data_user, new_email)
+        cek = cek_at(new_email)
+        confirm = cari_index_email(data_user, new_email)
 
-        if confirm == -1 and cek_at:
+        if confirm == -1 and cek:
             break
-        if not cek_at:
+        if not cek:
             print("Format email salah, silahkan masukkan email yang benar")
         else:
             print("Email sudah ada, silahkan gunakan email lain. ")
