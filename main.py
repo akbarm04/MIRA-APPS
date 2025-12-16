@@ -23,7 +23,7 @@ def ambildata():
 def login():
     data_user = ambildata()
     while True:
-        print("\nLakukan Login")
+        print("\n=== Lakukan Login ===")
         email = input("Masukkan Email: ")
         password = input("Masukkan Password: ")
         index_email = cari_index_email(data_user, email)
@@ -42,7 +42,7 @@ def login():
 def signup():
     data_user = ambildata()
     while True:
-        print("\nLakukan Sign Up")
+        print("\n=== Lakukan Sign Up ===")
         new_email = input("Masukkan Email: ")
         cek = cek_at(new_email)
         confirm = cari_index_email(data_user, new_email)
@@ -62,17 +62,44 @@ def signup():
         file.write(f"{new_data_user}\n")
     print("\nSign Up berhasil")
 
+def tampil_bahan():
+    with open("bahan.txt", "r") as file:
+        bahan = file.read().splitlines()
+
+    print("\n=== PILIH BAHAN YANG KAMU PUNYA ===")
+    for i in range(len(bahan)):
+        print(str(i+1) + ". " + bahan[i])
+
+    return bahan
+
+def pilih_bahan(bahan):
+    pilihan = input(f"Masukkan nomor bahan: ")
+    pilihan = pilihan.split(",")
+
+    bahan_user = []
+
+    for p in pilihan: 
+        index = int(p.strip()) - 1 
+        if index >= 0 and index < len(bahan):
+            bahan_user.append(bahan[index])
+
+    return bahan_user
+    
 #menu setelah login
 def menu_mira(username):
     while True:
-        print(f"\nHalo {username}, Selamat datang di Mira Apps\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
+        print(f"\n=== Halo {username}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang? ===")
         print("1. Mencari resep\n2. Menulis resep\n3. Keluar")
         pilih_menu = input("Pilihanmu: ")
 
         if pilih_menu == "1":
-            print("Silahkan pilih bahan dasar yang anda miliki:\n 1.")
+            bahan = tampil_bahan()
+            bahan_user = pilih_bahan(bahan)
+            print("Fitur mencari resep masih dalam tahap pengembangan. Nantikan update berikutnya!")
+            continue
         elif pilih_menu == "2":
-            print("Fitur menulis resep masih dalam pengembangan")
+            print("Fitur menulis resep masih dalam pengembangan!")
+            continue
         elif pilih_menu == "3":
             print("Terimakasih telah menggunakan Mira Apps")
             return
@@ -81,7 +108,7 @@ def menu_mira(username):
 
 #program utama
 while True:
-    print("Selamat Datang di Mira Apps")
+    print("=== Selamat Datang di Mira Apps ===")
     print("1. Login\n2. Sign Up\n3. Keluar")
     pilih = input("Pilihanmu: ")
 
