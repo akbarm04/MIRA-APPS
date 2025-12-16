@@ -26,7 +26,7 @@ while awal:
                     lanjut = True
                     awal = False
                     break
-                else:
+                elif (index_email):
                     print("Password salah")
             else:
                 print("Email tidak ditemukan\n")
@@ -36,9 +36,12 @@ while awal:
         while True:
             print("\nLakukan Sign Up")
             new_email = input("Masukkan Email: ")
+            cek_at = fc.cek_at(new_email)
             confirm = fc.cari_index_email(data_user, new_email)
-            if confirm == -1:
-                break  
+            if confirm == -1 and cek_at == True:
+                break
+            if cek_at == False:
+                print("Format email salah, silahkan masukkan email yang benar")
             else:
                 print("Email sudah ada, silahkan gunakan email lain. ")
         new_username = input("Masukkan Username: ")
