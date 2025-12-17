@@ -144,7 +144,7 @@ def detail_resep(resep):
 #menu setelah login
 def menu_mira(username):
     while True:
-        print(f"\n=== Halo {username}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang? ===")
+        print(f"\n=== Halo {username}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
         print("1. Mencari resep\n2. Menulis resep\n3. Keluar")
         pilih_menu = input("Pilihanmu: ")
 
