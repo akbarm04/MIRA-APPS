@@ -40,7 +40,7 @@ while awal:
             confirm = fc.cari_index_email(data_user, new_email)
             if confirm == -1 and cek_at == True:
                 break
-            if cek_at == False:
+            elif cek_at == False:
                 print("Format email salah, silahkan masukkan email yang benar")
             else:
                 print("Email sudah ada, silahkan gunakan email lain. ")
