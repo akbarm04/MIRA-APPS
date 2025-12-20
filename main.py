@@ -1,22 +1,46 @@
+#fungsi mencari index email
 def cari_index_email(list, cari):
     for i in range(len(list)):
         if list[i][1] == cari:
             return i
     return -1
 
-def cek_at(email):
-    if "@" in email:
-        return True
-    else:
+#fungsi mencari index username
+def cari_index_username(list, cari):
+    for i in range(len(list)):
+        if list[i][0] == cari:
+            return i
+    return -1
+
+#fungsi untuk mengecek email sesuai format
+def valid_email(email):
+    valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@._"
+
+    #cek apakah ada @
+    if "@" and "." not in email:
         return False
     
+    #cek apakah email sesuai
+    for char in email:
+        if char not in valid:
+            return False
+    return True
+
+#fungsi cek username apakah valid
+def valid_username (username):
+    valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789._"
+    for char in username:
+        if char not in valid:
+            return False
+    return True
+        
 #fungsi ambil data user dari file
 def ambildata():
     with open("data_user.txt", "r") as file:
         lines = file.readlines()
     data_user = []
     for line in lines:
-        data_user.append(line.strip( ).split( ))
+        data_user.append(line.strip().split("|"))
     return data_user
 
 #fungsi login
@@ -24,40 +48,75 @@ def login():
     data_user = ambildata()
     while True:
         print("\n=== Lakukan Login ===")
-        email = input("Masukkan Email: ")
+        key_user = input("Masukkan Email atau Username: ")
+        #cek apakah email atau username
+        if "@" in key_user:
+            key_user = key_user
+            index_user = cari_index_email(data_user, key_user)
+        else:
+            key_user = key_user.lower()
+            index_user = cari_index_username(data_user, key_user)
+
         password = input("Masukkan Password: ")
-        index_email = cari_index_email(data_user, email)
+        
             
-        if index_email != -1:
-            if email == data_user[index_email][1] and password == data_user [index_email][2]:
+        if index_user != -1:
+            if key_user == data_user[index_user][1] or key_user == data_user[index_user][0] and password == data_user [index_user][2]:
                 print("Selamat anda berhasil Login")
-                return True, index_email, data_user
+                return True, index_user, data_user
             else:
                 print("Password salah")
         else:
             print("Email tidak ditemukan\n")
             return False, -1, data_user
         
-#fungsi signup        
-def signup():
+#fungsi register       
+def register():
     data_user = ambildata()
+    #Memasukkan email baru
     while True:
         print("\n=== Lakukan Sign Up ===")
         new_email = input("Masukkan Email: ")
-        cek = cek_at(new_email)
-        confirm = cari_index_email(data_user, new_email)
-
-        if confirm == -1 and cek:
+        cek_email = valid_email(new_email)
+        confirm_email = cari_index_email(data_user, new_email)
+        if confirm_email == -1 and cek_email:
             break
-        if not cek:
+        elif new_email == "":
+            print("Email tidak boleh kosong, silahkan isi")
+        elif not cek_email:
             print("Format email salah, silahkan masukkan email yang benar")
         else:
-            print("Email sudah ada, silahkan gunakan email lain. ")
+            print("Email sudah ada, silahkan gunakan email lain.")
 
-    new_username = input("Masukkan Username: ")
-    new_password = input("Masukkan Password: ")
+    #memasukkan username baru
+    while True:
+        new_username = input("Masukkan Username: ").lower()
+        cek_username = valid_username(new_username)
+        confirm_username =  cari_index_username(data_user, new_username)
+        if confirm_username == -1 and cek_username:
+            break
+        elif new_username == "":
+            print("Username tidak boleh kosong, silahkan isi")
+        elif not cek_username:
+            print('Username hanya bisa diisi huruf, angka, titik "." dan underscore "_"')
+        else:
+            print("Username sudah terpakai, silahkan gunakan yang lain")
 
-    new_data_user = f"{new_username} {new_email} {new_password}"
+    #memasukkan password baru
+    while True:
+        new_password = input("Masukkan Password: ")
+        if new_password == "":
+            print("Password tidak boleh kosong, silahkan isi")
+        else: 
+            break
+    #memasukkan profile name
+    while True:
+        new_profile_name = input("Masukkan Profile Name: ")
+        if new_profile_name == "":
+            print("Profile Name tidak boleh kosong, silahkan isi")
+        else: 
+            break
+    new_data_user = f"{new_username}|{new_email}|{new_password}|{new_profile_name}"
     with open ("data_user.txt", "a") as file:
         file.write(f"{new_data_user}\n")
     print("\nSign Up berhasil")
@@ -145,7 +204,7 @@ def detail_resep(resep):
 def menu_mira(username):
     while True:
         print(f"\n=== Halo {username}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
-        print("1. Mencari resep\n2. Menulis resep\n3. Keluar")
+        print("1. Mencari resep\n2. Menulis resep\n3. Log Out")
         pilih_menu = input("Pilihanmu: ")
 
         if pilih_menu == "1":
@@ -172,15 +231,15 @@ def menu_mira(username):
 #program utama
 while True:
     print("=== Selamat Datang di Mira Apps ===")
-    print("1. Login\n2. Sign Up\n3. Keluar")
+    print("1. Login\n2. Register\n3. Keluar")
     pilih = input("Pilihanmu: ")
 
     if (pilih == "1"):
         berhasil, index, data = login()
         if berhasil:
-            menu_mira(data[index][0])
+            menu_mira(data[index][3])
     elif(pilih == "2"):
-        signup()
+        register()
     elif (pilih == "3"):
         print("Selamat Tinggal")
         break
