@@ -1,4 +1,1 @@
-Danish danish@gmail.com 123
-Akbar akbar@gmail.com 321
-cek cek@gmail.com cek
-akbar akbar@jga 111
+danish.cihuy|danish@gmail.com|123|Danish Cihuy
