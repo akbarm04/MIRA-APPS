@@ -43,14 +43,7 @@ def ambildata():
         data_user.append(line.strip().split("|"))
     return data_user
 
-#fungsi ambil data comment
-def data_comment():
-    with open("comment.txt", "r") as file:
-        lines = file.readlines()
-    data_comment = []
-    for line in lines:
-        data_comment.append(line.strip().split("|"))
-    return data_comment
+
 
 #fungsi login
 def login():
@@ -163,7 +156,6 @@ def cari_resep(bahan_user):
 
     for i in range(1, len(data)):
         baris = data[i].strip().split(",")
-        print(baris)
         bahan_utama = baris[0]
         nama = baris[1]
         bahan = baris[2].split(";")
@@ -208,18 +200,61 @@ def detail_resep(resep):
     for i in range(len(resep["langkah"])):
         print(str(i+1) + ". " + resep["langkah"][i])
 
-#fungsi melihat comment pada resep
+#fungsi ambil data comment
+def data_comment():
+    with open("comment.txt", "r") as file:
+        lines = file.readlines()
+    data_comment = []
+    for line in lines:
+        data_comment.append(line.strip().split("|"))
+    return data_comment
+
+#fungsi list comment sesuai pilihan 
 def lihat_comment(data, resep):
-    hasil = []
+    list_comment = []
     for item in data:
         if item[0] == resep:
-            hasil.append(item)
-    return hasil
+            list_comment.append(item)
+    return list_comment
+
+#melihat dan menulis comment
+def comment(resep, data):
+    while True:
+        resep = resep
+        print("\n=======================================================\n1. Melihat dan menulis comment\n2. Back")
+        pilih = input("Pilihanmu: ")
+        if pilih == "1":
+            list_comment = data_comment()
+            lihat_comment_resep = lihat_comment(list_comment, resep["nama"])
+            #menampilkan comment yang sudah ada
+            if len(lihat_comment_resep) > 0:
+                for i in range(len(lihat_comment_resep)):
+                    print(f"=======================================================\nPengirim: {lihat_comment_resep[i][1]}\nUsername: @{lihat_comment_resep[i][2]}\nComment:\n{lihat_comment_resep[i][3]}\n=======================================================\n")
+            else:
+                print("\n=======================================================\nBelum ada comment di resep ini\n=======================================================\n")
+            while True:
+                print("1. Menulis comment\n2. Back")
+                pilih_tulis = input("Pilihanmu: ")
+                if pilih_tulis == "1":
+                    comment = input("Silahkan tulis komentarmu:\n")
+                    new_comment = f"{resep["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
+                    with open ("comment.txt", "a") as file:
+                        file.write(f"{new_comment}\n")
+                        print("\nComment berhasil di tambahkan")
+                        break
+                elif pilih_tulis == "2":
+                    break
+                else:
+                    print("Pilihan tidak ditemukan\n")
+        elif pilih == "2":
+            break
+        else:
+            print("Pilihan tidak ditemukan\n")
 
 #menu setelah login
-def menu_mira(username):
+def menu_mira(index, data):
     while True:
-        print(f"\n=== Halo {username}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
+        print(f"\n=== Halo {data[index][3]}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
         print("1. Mencari resep\n2. Menulis resep\n3. Log Out")
         pilih_menu = input("Pilihanmu: ")
 
@@ -234,7 +269,7 @@ def menu_mira(username):
             else:
                 resep = pilih_resep(hasil)
                 detail_resep(resep)
-                
+                comment(resep, data)
         elif pilih_menu == "2":
             print("Fitur menulis resep masih dalam pengembangan!")
             continue
@@ -252,8 +287,10 @@ while True:
 
     if (pilih == "1"):
         berhasil, index, data = login()
+        print("Data: ", data)
+        print("index: ", index)
         if berhasil:
-            menu_mira(data[index][3])
+            menu_mira(index, data)
     elif(pilih == "2"):
         register()
     elif (pilih == "3"):
@@ -262,52 +299,6 @@ while True:
     else:
         print("Pilihan tidak ditemukan")
 
-#melihat dan menulis comment
-def comment():
-    while True:
-        berhasil, index, data = login()
-        bahan = tampil_bahan()
-        bahan_user = pilih_bahan(bahan)
-        hasil = cari_resep(bahan_user)
-        print("1. Melihat dan menulis comment\n2. Back")
-        pilih = input("Pilihanmu: ")
-        if pilih == "1":
-            print("Resep yang ingin di comment: ")
-            #Memunculkan list dari pilihan
-            for i in range(len(hasil)):
-                print(f"{i+1}. {hasil[i]["nama"]}")
-            while True:
-                list_comment = data_comment()
-                pilih_comment = input("Pilihanmu: ")
-                valid = "1234567890"
-                if pilih_comment in valid: #cek apakah input ada di valid
-                    pilih_comment = int(pilih_comment)-1
-                    if pilih_comment in range(len(hasil)): #cek apakah input diantara jumlah list
-                        lihat_comment_resep = lihat_comment(list_comment, hasil[pilih_comment]["nama"])
-                        #menampilkan comment yang sudah ada
-                        for i in range(len(lihat_comment_resep)):
-                            print(f"{lihat_comment_resep[i][1]}\n{lihat_comment_resep[i][2]}\n{lihat_comment_resep[i][3]}\n===============================")
-                        print("1. Menulis comment\n2. Back")
-                        pilih_menulis_comment = input("Pilihanmu: ")
-                        if pilih_menulis_comment == "1":
-                            comment = input("Silahkan tulis komentarmu:\n")
-                            new_comment = f"{hasil[pilih_comment]["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
-                            with open ("comment.txt", "a") as file:
-                                file.write(f"{new_comment}\n")
-                                print("\nComment berhasil di tambahkan")
-                        elif pilih_menulis_comment == "2":
-                            break
-                        else:
-                            print("Pilihan tidak ditemukan\n")
-                    else:
-                        print("Pilihan tidak ditemukan\n")
-                        break
-                else:
-                    print("Pilihan tidak ditemukan\n")
-                    break
-        elif pilih == "2":
-            break
-        else:
-            print("Pilihan tidak ditemukan\n")
+
 
 
