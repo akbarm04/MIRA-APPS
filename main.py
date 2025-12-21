@@ -12,7 +12,7 @@ def cari_index_username(list, cari):
             return i
     return -1
 
-#fungsi untuk mengecek email sesuai format
+#fungsi untuk mengecek email sesuai format  
 def valid_email(email):
     valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@._"
 
@@ -43,6 +43,15 @@ def ambildata():
         data_user.append(line.strip().split("|"))
     return data_user
 
+#fungsi ambil data comment
+def data_comment():
+    with open("comment.txt", "r") as file:
+        lines = file.readlines()
+    data_comment = []
+    for line in lines:
+        data_comment.append(line.strip().split("|"))
+    return data_comment
+
 #fungsi login
 def login():
     data_user = ambildata()
@@ -58,16 +67,15 @@ def login():
             index_user = cari_index_username(data_user, key_user)
 
         password = input("Masukkan Password: ")
-        
-            
         if index_user != -1:
             if key_user == data_user[index_user][1] or key_user == data_user[index_user][0] and password == data_user [index_user][2]:
                 print("Selamat anda berhasil Login")
                 return True, index_user, data_user
             else:
-                print("Password salah")
+                print("\nPassword salah!")
+                return False, -1, data_user
         else:
-            print("Email tidak ditemukan\n")
+            print("\nEmail atau Username tidak ditemukan!")
             return False, -1, data_user
         
 #fungsi register       
@@ -82,11 +90,11 @@ def register():
         if confirm_email == -1 and cek_email:
             break
         elif new_email == "":
-            print("Email tidak boleh kosong, silahkan isi")
+            print("\nEmail tidak boleh kosong, silahkan isi")
         elif not cek_email:
-            print("Format email salah, silahkan masukkan email yang benar")
+            print("\nFormat email salah, silahkan masukkan email yang benar")
         else:
-            print("Email sudah ada, silahkan gunakan email lain.")
+            print("\nEmail sudah ada, silahkan gunakan email lain.")
 
     #memasukkan username baru
     while True:
@@ -96,24 +104,24 @@ def register():
         if confirm_username == -1 and cek_username:
             break
         elif new_username == "":
-            print("Username tidak boleh kosong, silahkan isi")
+            print("\nUsername tidak boleh kosong, silahkan isi")
         elif not cek_username:
-            print('Username hanya bisa diisi huruf, angka, titik "." dan underscore "_"')
+            print('\nUsername hanya bisa diisi huruf, angka, titik "." dan underscore "_"')
         else:
-            print("Username sudah terpakai, silahkan gunakan yang lain")
+            print("\nUsername sudah terpakai, silahkan gunakan yang lain")
 
     #memasukkan password baru
     while True:
         new_password = input("Masukkan Password: ")
         if new_password == "":
-            print("Password tidak boleh kosong, silahkan isi")
+            print("\nPassword tidak boleh kosong, silahkan isi")
         else: 
             break
     #memasukkan profile name
     while True:
         new_profile_name = input("Masukkan Profile Name: ")
         if new_profile_name == "":
-            print("Profile Name tidak boleh kosong, silahkan isi")
+            print("\nProfile Name tidak boleh kosong, silahkan isi")
         else: 
             break
     new_data_user = f"{new_username}|{new_email}|{new_password}|{new_profile_name}"
@@ -155,7 +163,7 @@ def cari_resep(bahan_user):
 
     for i in range(1, len(data)):
         baris = data[i].strip().split(",")
-
+        print(baris)
         bahan_utama = baris[0]
         nama = baris[1]
         bahan = baris[2].split(";")
@@ -199,6 +207,14 @@ def detail_resep(resep):
     print("\nLangkah Memasak:")
     for i in range(len(resep["langkah"])):
         print(str(i+1) + ". " + resep["langkah"][i])
+
+#fungsi melihat comment pada resep
+def lihat_comment(data, resep):
+    hasil = []
+    for item in data:
+        if item[0] == resep:
+            hasil.append(item)
+    return hasil
 
 #menu setelah login
 def menu_mira(username):
@@ -245,3 +261,53 @@ while True:
         break
     else:
         print("Pilihan tidak ditemukan")
+
+#melihat dan menulis comment
+def comment():
+    while True:
+        berhasil, index, data = login()
+        bahan = tampil_bahan()
+        bahan_user = pilih_bahan(bahan)
+        hasil = cari_resep(bahan_user)
+        print("1. Melihat dan menulis comment\n2. Back")
+        pilih = input("Pilihanmu: ")
+        if pilih == "1":
+            print("Resep yang ingin di comment: ")
+            #Memunculkan list dari pilihan
+            for i in range(len(hasil)):
+                print(f"{i+1}. {hasil[i]["nama"]}")
+            while True:
+                list_comment = data_comment()
+                pilih_comment = input("Pilihanmu: ")
+                valid = "1234567890"
+                if pilih_comment in valid: #cek apakah input ada di valid
+                    pilih_comment = int(pilih_comment)-1
+                    if pilih_comment in range(len(hasil)): #cek apakah input diantara jumlah list
+                        lihat_comment_resep = lihat_comment(list_comment, hasil[pilih_comment]["nama"])
+                        #menampilkan comment yang sudah ada
+                        for i in range(len(lihat_comment_resep)):
+                            print(f"{lihat_comment_resep[i][1]}\n{lihat_comment_resep[i][2]}\n{lihat_comment_resep[i][3]}\n===============================")
+                        print("1. Menulis comment\n2. Back")
+                        pilih_menulis_comment = input("Pilihanmu: ")
+                        if pilih_menulis_comment == "1":
+                            comment = input("Silahkan tulis komentarmu:\n")
+                            new_comment = f"{hasil[pilih_comment]["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
+                            with open ("comment.txt", "a") as file:
+                                file.write(f"{new_comment}\n")
+                                print("\nComment berhasil di tambahkan")
+                        elif pilih_menulis_comment == "2":
+                            break
+                        else:
+                            print("Pilihan tidak ditemukan\n")
+                    else:
+                        print("Pilihan tidak ditemukan\n")
+                        break
+                else:
+                    print("Pilihan tidak ditemukan\n")
+                    break
+        elif pilih == "2":
+            break
+        else:
+            print("Pilihan tidak ditemukan\n")
+
+
