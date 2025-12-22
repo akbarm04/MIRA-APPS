@@ -200,6 +200,26 @@ def detail_resep(resep):
     for i in range(len(resep["langkah"])):
         print(str(i+1) + ". " + resep["langkah"][i])
 
+#Fungsi filter comment
+def filter_comment(comment):
+    text = comment
+    comment_lower = text.lower()
+    comment_pisah = comment_lower.split()
+    with open("id_badwords.txt", "r") as file:
+        lines = file.readlines()
+    kata_terlarang = []
+    for line in lines:
+        kata_terlarang.append(line.strip())
+
+    for i in range(len(comment_pisah)):
+        if comment_pisah[i] in kata_terlarang:
+            return -1
+        
+    if "|" in text:
+        return -2
+    else:
+        return text
+
 #fungsi ambil data comment
 def data_comment():
     with open("comment.txt", "r") as file:
@@ -221,7 +241,7 @@ def lihat_comment(data, resep):
 def comment(resep, data):
     while True:
         resep = resep
-        print("\n=======================================================\n1. Melihat dan menulis comment\n2. Back")
+        print("\n" + "=" * 50 + "\n1. Melihat dan menulis comment\n2. Back")
         pilih = input("Pilihanmu: ")
         if pilih == "1":
             list_comment = data_comment()
@@ -229,19 +249,27 @@ def comment(resep, data):
             #menampilkan comment yang sudah ada
             if len(lihat_comment_resep) > 0:
                 for i in range(len(lihat_comment_resep)):
-                    print(f"=======================================================\nPengirim: {lihat_comment_resep[i][1]}\nUsername: @{lihat_comment_resep[i][2]}\nComment:\n{lihat_comment_resep[i][3]}\n=======================================================\n")
+                    print("\n" + "=" * 50 + f"\nPengirim: {lihat_comment_resep[i][1]}\nUsername: @{lihat_comment_resep[i][2]}\nComment:\n{lihat_comment_resep[i][3]}\n"+ "=" * 50)
             else:
-                print("\n=======================================================\nBelum ada comment di resep ini\n=======================================================\n")
+                print("\n" + "=" * 50 + "\nBelum ada comment di resep ini\n"+ "=" * 50 +"\n")
             while True:
                 print("1. Menulis comment\n2. Back")
                 pilih_tulis = input("Pilihanmu: ")
                 if pilih_tulis == "1":
                     comment = input("Silahkan tulis komentarmu:\n")
-                    new_comment = f"{resep["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
-                    with open ("comment.txt", "a") as file:
-                        file.write(f"{new_comment}\n")
-                        print("\nComment berhasil di tambahkan")
+                    comment = filter_comment(comment)
+                    if comment == -1:
+                        print("Dilarang menggunakan kata yang tidak pantas!")
                         break
+                    elif comment == -2:
+                        print('Maaf tidak bisa menggunakan simbol "|"')
+                        break
+                    else:
+                        new_comment = f"{resep["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
+                        with open ("comment.txt", "a") as file:
+                            file.write(f"{new_comment}\n")
+                            print("\nComment berhasil di tambahkan")
+                            break
                 elif pilih_tulis == "2":
                     break
                 else:
@@ -298,6 +326,9 @@ while True:
         break
     else:
         print("Pilihan tidak ditemukan")
+
+
+
 
 
 
