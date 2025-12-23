@@ -315,8 +315,6 @@ while True:
 
     if (pilih == "1"):
         berhasil, index, data = login()
-        print("Data: ", data)
-        print("index: ", index)
         if berhasil:
             menu_mira(index, data)
     elif(pilih == "2"):
