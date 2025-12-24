@@ -238,52 +238,99 @@ def lihat_comment(data, resep):
     return list_comment
 
 #melihat dan menulis comment
-def comment(resep, data):
+def comment(resep, index, data):
     while True:
         resep = resep
-        print("\n" + "=" * 50 + "\n1. Melihat dan menulis comment\n2. Back")
-        pilih = input("Pilihanmu: ")
-        if pilih == "1":
-            list_comment = data_comment()
-            lihat_comment_resep = lihat_comment(list_comment, resep["nama"])
-            #menampilkan comment yang sudah ada
-            if len(lihat_comment_resep) > 0:
-                for i in range(len(lihat_comment_resep)):
-                    print("\n" + "=" * 50 + f"\nPengirim: {lihat_comment_resep[i][1]}\nUsername: @{lihat_comment_resep[i][2]}\nComment:\n{lihat_comment_resep[i][3]}\n"+ "=" * 50)
+        list_comment = data_comment()
+        lihat_comment_resep = lihat_comment(list_comment, resep["nama"])
+        #menampilkan comment yang sudah ada
+        if len(lihat_comment_resep) > 0:
+            for i in range(len(lihat_comment_resep)):
+                print("\n" + "=" * 50 + f"\nPengirim: {lihat_comment_resep[i][1]}\nUsername: @{lihat_comment_resep[i][2]}\nComment:\n{lihat_comment_resep[i][3]}\n"+ "=" * 50)
+        else:
+            print("\n" + "=" * 50 + "\nBelum ada comment di resep ini\n"+ "=" * 50 +"\n")
+        print("1. Menulis comment\n2. Back")
+        pilih_tulis = input("Pilihanmu: ")
+        if pilih_tulis == "1":
+            comment = input("Silahkan tulis komentarmu:\n")
+            comment = filter_comment(comment)
+            if comment == -1:
+                print("Dilarang menggunakan kata yang tidak pantas!")
+                break
+            elif comment == -2:
+                print('Maaf tidak bisa menggunakan simbol "|"')
+                break
             else:
-                print("\n" + "=" * 50 + "\nBelum ada comment di resep ini\n"+ "=" * 50 +"\n")
-            while True:
-                print("1. Menulis comment\n2. Back")
-                pilih_tulis = input("Pilihanmu: ")
-                if pilih_tulis == "1":
-                    comment = input("Silahkan tulis komentarmu:\n")
-                    comment = filter_comment(comment)
-                    if comment == -1:
-                        print("Dilarang menggunakan kata yang tidak pantas!")
-                        break
-                    elif comment == -2:
-                        print('Maaf tidak bisa menggunakan simbol "|"')
-                        break
-                    else:
-                        new_comment = f"{resep["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
-                        with open ("comment.txt", "a") as file:
-                            file.write(f"{new_comment}\n")
-                            print("\nComment berhasil di tambahkan")
-                            break
-                elif pilih_tulis == "2":
+                new_comment = f"{resep["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
+                with open ("comment.txt", "a") as file:
+                    file.write(f"{new_comment}\n")
+                    print("\nComment berhasil di tambahkan")
                     break
-                else:
-                    print("Pilihan tidak ditemukan\n")
-        elif pilih == "2":
+        elif pilih_tulis == "2":
             break
         else:
             print("Pilihan tidak ditemukan\n")
+
+#fungsi mengambil data bookmark
+def data_bookmark():
+    with open("bookmark.txt", "r") as file:
+            lines = file.readlines()
+    data_bookmark = []
+    for line in lines:
+        data_bookmark.append(line.strip().split("|"))
+    return data_bookmark
+
+#cek isi bookmark apakah sudah ada
+def cek_bookmark(resep, index, data):
+    list_bookmark = data_bookmark()
+    for i in range(len(list_bookmark)):
+        if list_bookmark[i][0] == data[index][0] and list_bookmark[i][1] == resep["nama"]:
+            return -1
+        
+#memasukkan resep ke bookmark
+def bookmark(resep, index, data):
+    valid = cek_bookmark(resep, index, data)
+    if valid != -1:
+        with open("bookmark.txt", "a") as file:
+            file.write(f"{data[index][0]}|{resep["nama"]}\n")
+        print("Resep berhasil dimasukkan ke dalam bookmark")
+    else:
+        print("Resep sudah ada di bookmark")
+
+#isi bookmark user
+def bookmark_user(index, data):
+    list_bookmark = data_bookmark()
+    list_bookmark_user = []
+    data[index][0]
+    for i in range(len(list_bookmark)):
+        if list_bookmark[i][0] == data[index][0]:
+            list_bookmark_user.append(list_bookmark[i])
+    return list_bookmark_user
+
+#buka detail resep dari bookmark
+def bookmark_detail (nama):
+    with open("resep.csv", "r") as file:
+        lines = file.readlines()
+
+    for line in lines[1:]:
+        hasil = line.strip().split(",")
+        if hasil[1] == nama:
+            resep = {
+                "nama": hasil[1],
+                "bahan": hasil[2].split(";"),
+                "langkah": hasil[3].split(";")
+            }
+            detail_resep(resep)
+            break
+
+
+
 
 #menu setelah login
 def menu_mira(index, data):
     while True:
         print(f"\n=== Halo {data[index][3]}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
-        print("1. Mencari resep\n2. Menulis resep\n3. Log Out")
+        print("1. Mencari resep\n2. Menulis resep\n3. Profile\n4. Log Out")
         pilih_menu = input("Pilihanmu: ")
 
         if pilih_menu == "1":
@@ -297,11 +344,47 @@ def menu_mira(index, data):
             else:
                 resep = pilih_resep(hasil)
                 detail_resep(resep)
-                comment(resep, data)
+                while True:
+                    print("\n1. Melihat dan menulis comment\n2. Masukkan ke dalam Bookmark\n3. Back")
+                    pilih = input("Pilih: ")
+                    if pilih == "1":
+                        comment(resep, index, data)
+                    elif pilih == "2":
+                        bookmark(resep, index, data)
+                    elif pilih == "3":
+                        break
+                    else:
+                        print("Pilihan tidak ditemukan")
         elif pilih_menu == "2":
-            print("Fitur menulis resep masih dalam pengembangan!")
+            print("Fitur belum tersedia")
             continue
         elif pilih_menu == "3":
+            print(f"\n=== PROFILE ===\nProfile Name: {data[index][3]}\nUsername: @{data[index][0]}\nEmail: {data[index][1]}\n")
+            while True:
+                print("="*30 +"\n1. Melihat Bookmark\n2. Mengubah Profile Name\n3. Back")
+                pilih_profile = input("Pilihanmu: ")
+                if pilih_profile == "1":
+                    list_bookmark = bookmark_user(index, data)
+                    print("\nBookmarkmu:")
+                    for i in range(len(list_bookmark)):
+                        print(f"{i+1}. {list_bookmark[i][1]}")
+                    pilih_bookmark = input("Pilihanmu: ")
+                    valid_pilih = "1234567890"
+                    if pilih_bookmark in valid_pilih:
+                        pilih_bookmark = int(pilih_bookmark)-1
+                        if pilih_bookmark in range(len(list_bookmark)):
+                           bookmark_detail(list_bookmark[pilih_bookmark][1])
+                        else:
+                            print("Pilihan tidak ditemukan")
+                    else:
+                        print("Pilihan tidak ditemukan")
+                elif pilih_profile == "2":
+                    print("Fitur ini belum tersedia")
+                elif pilih_profile == "3":
+                    break
+                else:
+                    print("Pilihan tidak ditemukan")
+        elif pilih_menu == "4":
             print("Terimakasih telah menggunakan Mira Apps\n")
             return
         else:
@@ -315,8 +398,6 @@ while True:
 
     if (pilih == "1"):
         berhasil, index, data = login()
-        print("Data: ", data)
-        print("index: ", index)
         if berhasil:
             menu_mira(index, data)
     elif(pilih == "2"):
