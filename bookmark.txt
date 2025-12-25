@@ -1,3 +1,5 @@
 testing|Ayam Kecap
 testing|Ayam Katsu
 testing|Telur Balado
+testing|Ayam Goreng Marinasi
+danish.cihuy|Mashed Potatto Creamy Garlic

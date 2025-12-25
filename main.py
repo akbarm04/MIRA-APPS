@@ -19,6 +19,8 @@ def valid_email(email):
     #cek apakah ada @
     if "@" and "." not in email:
         return False
+    elif email == "@." or ".@":
+        return False
     
     #cek apakah email sesuai
     for char in email:
@@ -100,6 +102,8 @@ def register():
             print("\nUsername tidak boleh kosong, silahkan isi")
         elif not cek_username:
             print('\nUsername hanya bisa diisi huruf, angka, titik "." dan underscore "_"')
+        elif new_username == "." or new_username == "_" or new_username == "._" or new_username == "_.":
+            print("Format username salah")
         else:
             print("\nUsername sudah terpakai, silahkan gunakan yang lain")
 
@@ -115,6 +119,8 @@ def register():
         new_profile_name = input("Masukkan Profile Name: ")
         if new_profile_name == "":
             print("\nProfile Name tidak boleh kosong, silahkan isi")
+        elif "|" in new_profile_name:
+            print('Nama tidak boleh mengandung "|"')
         else: 
             break
     new_data_user = f"{new_username}|{new_email}|{new_password}|{new_profile_name}"
@@ -322,10 +328,46 @@ def bookmark_detail (nama):
             }
             detail_resep(resep)
             break
+#buka bookmark di profile
+def profile_bookmark():
+    list_bookmark = bookmark_user(index, data)
+    print("\nBookmarkmu:")
+    for i in range(len(list_bookmark)):
+        print(f"{i+1}. {list_bookmark[i][1]}")
+    pilih_bookmark = input("Pilihanmu: ")
+    valid_pilih = "1234567890"
+    if pilih_bookmark in valid_pilih:
+        pilih_bookmark = int(pilih_bookmark)-1
+        if pilih_bookmark in range(len(list_bookmark)):
+            bookmark_detail(list_bookmark[pilih_bookmark][1])
+        else:
+            print("Pilihan tidak ditemukan")
+    else:
+        print("Pilihan tidak ditemukan")
+#ganti Profile Name
+def change_name(data, index):
+    print(f"Profile name sekarang: {data[index][3]}")
+    change_name = input("Silahkan masukkan Profile Name baru anda: ")
+    if change_name == "":
+        print("Nama tidak boleh kosong")
+    elif "|" in change_name:
+        print('Nama tidak boleh mengandung "|"')
+    else: 
+        #mengganti nama di data_user.txt
+        data[index][3] = change_name
+        with open("data_user.txt", "w") as file:
+            for i in data:
+                file.write(i[0] + "|" + i[1] + "|" + i[2] + "|" + i[3] + "\n")
 
-
-
-
+        #mengganti nama di comment,txt
+        list_comment = data_comment()
+        for j in range(len(list_comment)):
+            if list_comment[j][2] == data[index][0]:
+                list_comment[j][1] = change_name
+        with open("comment.txt", "w") as file_comment:
+            for k in list_comment:
+                file_comment.write(k[0] + "|" + k[1] + "|" + k[2] + "|" + k[3] +"\n")
+        print(f"Profile Name berhasil diganti")
 #menu setelah login
 def menu_mira(index, data):
     while True:
@@ -364,22 +406,9 @@ def menu_mira(index, data):
                 print("="*30 +"\n1. Melihat Bookmark\n2. Mengubah Profile Name\n3. Back")
                 pilih_profile = input("Pilihanmu: ")
                 if pilih_profile == "1":
-                    list_bookmark = bookmark_user(index, data)
-                    print("\nBookmarkmu:")
-                    for i in range(len(list_bookmark)):
-                        print(f"{i+1}. {list_bookmark[i][1]}")
-                    pilih_bookmark = input("Pilihanmu: ")
-                    valid_pilih = "1234567890"
-                    if pilih_bookmark in valid_pilih:
-                        pilih_bookmark = int(pilih_bookmark)-1
-                        if pilih_bookmark in range(len(list_bookmark)):
-                           bookmark_detail(list_bookmark[pilih_bookmark][1])
-                        else:
-                            print("Pilihan tidak ditemukan")
-                    else:
-                        print("Pilihan tidak ditemukan")
+                    profile_bookmark()
                 elif pilih_profile == "2":
-                    print("Fitur ini belum tersedia")
+                    change_name(data, index)
                 elif pilih_profile == "3":
                     break
                 else:
