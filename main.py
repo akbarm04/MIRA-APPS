@@ -19,8 +19,6 @@ def valid_email(email):
     #cek apakah ada @
     if "@" and "." not in email:
         return False
-    elif email == "@." or ".@":
-        return False
     
     #cek apakah email sesuai
     for char in email:
