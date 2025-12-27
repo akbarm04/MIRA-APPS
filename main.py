@@ -16,6 +16,10 @@ def cari_index_username(list, cari):
 def valid_email(email):
     valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@._"
 
+    #cek apakah email hanya @. atau .@ saja
+    if email == "@." or email == ".@":
+        return False
+    
     #cek apakah ada @
     if "@" and "." not in email:
         return False
