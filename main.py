@@ -412,7 +412,7 @@ def menu_mira(index, data):
                 print("="*30 +"\n1. Melihat Bookmark\n2. Mengubah Profile Name\n3. Back")
                 pilih_profile = input("Pilihanmu: ")
                 if pilih_profile == "1":
-                    profile_bookmark()
+                    profile_bookmark(index, data)  
                 elif pilih_profile == "2":
                     change_name(data, index)
                 elif pilih_profile == "3":
