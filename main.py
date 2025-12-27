@@ -331,11 +331,15 @@ def bookmark_detail (nama):
             detail_resep(resep)
             break
 #buka bookmark di profile
-def profile_bookmark():
+def profile_bookmark(index, data):
     list_bookmark = bookmark_user(index, data)
-    print("\nBookmarkmu:")
-    for i in range(len(list_bookmark)):
-        print(f"{i+1}. {list_bookmark[i][1]}")
+    if not list_bookmark:
+        print("\nBelum ada Bookmark!!")
+        return
+    else:
+        print("\nBookmarkmu:")
+        for i in range(len(list_bookmark)):
+            print(f"{i+1}. {list_bookmark[i][1]}")
     pilih_bookmark = input("Pilihanmu: ")
     valid_pilih = "1234567890"
     if pilih_bookmark in valid_pilih:
