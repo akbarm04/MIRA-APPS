@@ -374,7 +374,7 @@ def change_name(data, index):
             for k in list_comment:
                 file_comment.write(k[0] + "|" + k[1] + "|" + k[2] + "|" + k[3] +"\n")
         print(f"Profile Name berhasil diganti")
-
+#menabah resep pribadi
 def tambah_resep_pribadi(index, data):
     print("=== Tambah Resep Pribadi ===")
 
@@ -387,6 +387,59 @@ def tambah_resep_pribadi(index, data):
         file.write(f"{new_resep}\n")
         print("\nResep berhasil di tambahkan")
 
+#data resep pribadi
+def data_resep_pribadi():
+    with open("resep_user.txt", "r") as file:
+            lines = file.readlines()
+    data_resep_pribadi = []
+    for line in lines:
+        data_resep_pribadi.append(line.strip().split("|"))
+    return data_resep_pribadi
+
+#data resep pribadi user
+def resep_pribadi_user(index, data):
+    list_resep_pribadi = data_resep_pribadi()
+    list_resep_user = []
+    for i in range(len(list_resep_pribadi)):
+        if list_resep_pribadi[i][0] == data[index][0]:
+            list_resep_user.append(list_resep_pribadi[i])
+    return list_resep_user
+
+#detai resep user
+def resep_pribadi_detail (nama):
+    with open("resep_user.txt", "r") as file:
+        lines = file.readlines()
+
+    for line in lines:
+        hasil = line.strip().split("|")
+        if hasil[1] == nama:
+            resep = {
+                "nama": hasil[1],
+                "bahan": hasil[2].split(";"),
+                "langkah": hasil[3].split(";")
+            }
+            detail_resep(resep)
+            break
+#resep pribadi di profile
+def profile_resep_pribadi(index, data):
+    list_resep_pribadi = resep_pribadi_user(index, data)
+    if not list_resep_pribadi:
+        print("\nBelum ada Resep Pribadi!!")
+        return
+    else:
+        print("\nResep Pribadimu:")
+        for i in range(len(list_resep_pribadi)):
+            print(f"{i+1}. {list_resep_pribadi[i][1]}")
+    pilih_resep_pribadi = input("Pilihanmu: ")
+    valid_pilih = "1234567890"
+    if pilih_resep_pribadi in valid_pilih:
+        pilih_resep_pribadi = int(pilih_resep_pribadi)-1
+        if pilih_resep_pribadi in range(len(list_resep_pribadi)):
+            resep_pribadi_detail(list_resep_pribadi[pilih_resep_pribadi][1])
+        else:
+            print("Pilihan tidak ditemukan")
+    else:
+        print("Pilihan tidak ditemukan")
 #menu setelah login
 def menu_mira(index, data):
     while True:
@@ -421,13 +474,15 @@ def menu_mira(index, data):
         elif pilih_menu == "3":
             print(f"\n=== PROFILE ===\nProfile Name: {data[index][3]}\nUsername: @{data[index][0]}\nEmail: {data[index][1]}\n")
             while True:
-                print("="*30 +"\n1. Melihat Bookmark\n2. Mengubah Profile Name\n3. Back")
+                print("="*30 +"\n1. Melihat Bookmark\n2. Melihat Resep Pribadi\n3. Mengubah Profile Name\n4. Back")
                 pilih_profile = input("Pilihanmu: ")
                 if pilih_profile == "1":
                     profile_bookmark(index, data)  
                 elif pilih_profile == "2":
-                    change_name(data, index)
+                    profile_resep_pribadi(index, data)
                 elif pilih_profile == "3":
+                    change_name(data, index)
+                elif pilih_profile == "4":
                     break
                 else:
                     print("Pilihan tidak ditemukan")
