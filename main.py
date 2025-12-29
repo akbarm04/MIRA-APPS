@@ -335,7 +335,7 @@ def profile_bookmark(index, data):
     list_bookmark = bookmark_user(index, data)
     if not list_bookmark:
         print("\nBelum ada Bookmark!!")
-        return
+        return -1
     else:
         print("\nBookmarkmu:")
         for i in range(len(list_bookmark)):
@@ -454,11 +454,14 @@ def profile_resep_pribadi(index, data):
     list_resep_pribadi = resep_pribadi_user(index, data)
     if not list_resep_pribadi:
         print("\nBelum ada Resep Pribadi!!")
-        return
+        return -1
     else:
         print("\nResep Pribadimu:")
         for i in range(len(list_resep_pribadi)):
             print(f"{i+1}. {list_resep_pribadi[i][1]}")
+
+def pilih_resep_pribadi(index, data):
+    list_resep_pribadi = resep_pribadi_user(index, data)
     pilih_resep_pribadi = input("Pilihanmu: ")
     valid_pilih = "1234567890"
     if pilih_resep_pribadi in valid_pilih:
@@ -469,6 +472,27 @@ def profile_resep_pribadi(index, data):
             print("Pilihan tidak ditemukan")
     else:
         print("Pilihan tidak ditemukan")
+
+def hapus_resep_prbadi (index, data):
+    list_data_resep_pribadi = data_resep_pribadi()
+    list_resep_pribadi = resep_pribadi_user(index, data)
+    pilih_bookmark = input("Pilihanmu: ")
+    valid_pilih = "1234567890"
+    if pilih_bookmark in valid_pilih:
+        pilih_bookmark = int(pilih_bookmark)-1
+        if pilih_bookmark in range(len(list_resep_pribadi)):
+            for i in range(len(list_data_resep_pribadi)):
+                if data[index][0] == list_data_resep_pribadi[i][0] and list_resep_pribadi[pilih_bookmark][1] == list_data_resep_pribadi[i][1]:
+                    list_data_resep_pribadi.pop(i)
+                    with open("resep_user.txt", "w") as file:
+                        for item in list_data_resep_pribadi:
+                            file.write(item[0] + "|" + item[1]+ "|" + item[2]+ "|" + item[3]+"\n")
+                    break
+        else:
+            print("Pilihan tidak ditemukan")
+    else:
+        print("Pilihan tidak ditemukan")
+
 #menu setelah login
 def menu_mira(index, data):
     while True:
@@ -510,15 +534,28 @@ def menu_mira(index, data):
                         print("\n1. Melihat Bookmark\n2. Menghapus Bookmark\n3. Back")
                         pilih_bookmark_profile = input("Pilihanmu: ")
                         if pilih_bookmark_profile == "1":
-                            profile_bookmark(index, data)
-                            pilih_bookmark_user(index, data)
+                            if profile_bookmark(index,data) != -1:
+                                pilih_bookmark_user(index, data)
                         elif pilih_bookmark_profile == "2":
-                            profile_bookmark(index, data)
-                            hapus_bookmark(index,data)
+                            if profile_bookmark(index, data) != -1:
+                                hapus_bookmark(index,data)
                         elif pilih_bookmark_profile == "3":
                             break
+                        else:
+                            print("Pilihan tidak ditemukan")
                 elif pilih_profile == "2":
-                    profile_resep_pribadi(index, data)
+                    print("\n1. Melihat Resep Prbadi\n2. Menghapus Resep Pribadi\n3. Back")
+                    pilih_resep_profile = input("Pilihanmu: ")
+                    if pilih_resep_profile == "1":
+                        if profile_resep_pribadi(index, data) != -1:
+                            pilih_resep_pribadi(index,data)
+                    elif pilih_resep_profile == "2":
+                        if profile_resep_pribadi(index, data) != -1:
+                            hapus_resep_prbadi(index,data)
+                    elif pilih_resep_profile == "3":
+                        break
+                    else:
+                        print("Pilihan tidak ditemukan")
                 elif pilih_profile == "3":
                     change_name(data, index)
                 elif pilih_profile == "4":
