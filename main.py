@@ -374,6 +374,19 @@ def change_name(data, index):
             for k in list_comment:
                 file_comment.write(k[0] + "|" + k[1] + "|" + k[2] + "|" + k[3] +"\n")
         print(f"Profile Name berhasil diganti")
+
+def tambah_resep_pribadi(index, data):
+    print("=== Tambah Resep Pribadi ===")
+
+    nama_resep = input("Masukkan nama resep: ")
+    bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ")
+    langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ")
+
+    new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
+    with open ("resep_user.txt", "a") as file:
+        file.write(f"{new_resep}\n")
+        print("\nResep berhasil di tambahkan")
+
 #menu setelah login
 def menu_mira(index, data):
     while True:
@@ -404,8 +417,7 @@ def menu_mira(index, data):
                     else:
                         print("Pilihan tidak ditemukan")
         elif pilih_menu == "2":
-            print("Fitur belum tersedia")
-            continue
+            tambah_resep_pribadi(index, data)
         elif pilih_menu == "3":
             print(f"\n=== PROFILE ===\nProfile Name: {data[index][3]}\nUsername: @{data[index][0]}\nEmail: {data[index][1]}\n")
             while True:
