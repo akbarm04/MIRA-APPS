@@ -340,12 +340,36 @@ def profile_bookmark(index, data):
         print("\nBookmarkmu:")
         for i in range(len(list_bookmark)):
             print(f"{i+1}. {list_bookmark[i][1]}")
+
+def pilih_bookmark_user(index, data):
+    list_bookmark = bookmark_user(index, data)
     pilih_bookmark = input("Pilihanmu: ")
     valid_pilih = "1234567890"
     if pilih_bookmark in valid_pilih:
         pilih_bookmark = int(pilih_bookmark)-1
         if pilih_bookmark in range(len(list_bookmark)):
             bookmark_detail(list_bookmark[pilih_bookmark][1])
+        else:
+            print("Pilihan tidak ditemukan")
+    else:
+        print("Pilihan tidak ditemukan")
+
+#Menghapus bookmark
+def hapus_bookmark (index, data):
+    list_data_bookmark = data_bookmark()
+    list_bookmark = bookmark_user(index, data)
+    pilih_bookmark = input("Pilihanmu: ")
+    valid_pilih = "1234567890"
+    if pilih_bookmark in valid_pilih:
+        pilih_bookmark = int(pilih_bookmark)-1
+        if pilih_bookmark in range(len(list_bookmark)):
+            for i in range(len(list_data_bookmark)):
+                if data[index][0] == list_data_bookmark[i][0] and list_bookmark[pilih_bookmark][1] == list_data_bookmark[i][1]:
+                    list_data_bookmark.pop(i)
+                    with open("bookmark.txt", "w") as file:
+                        for item in list_data_bookmark:
+                            file.write(item[0] + "|" + item[1]+"\n")
+                    break
         else:
             print("Pilihan tidak ditemukan")
     else:
@@ -374,18 +398,6 @@ def change_name(data, index):
             for k in list_comment:
                 file_comment.write(k[0] + "|" + k[1] + "|" + k[2] + "|" + k[3] +"\n")
         print(f"Profile Name berhasil diganti")
-#menabah resep pribadi
-def tambah_resep_pribadi(index, data):
-    print("=== Tambah Resep Pribadi ===")
-
-    nama_resep = input("Masukkan nama resep: ")
-    bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ")
-    langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ")
-
-    new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
-    with open ("resep_user.txt", "a") as file:
-        file.write(f"{new_resep}\n")
-        print("\nResep berhasil di tambahkan")
 
 #data resep pribadi
 def data_resep_pribadi():
@@ -396,6 +408,23 @@ def data_resep_pribadi():
         data_resep_pribadi.append(line.strip().split("|"))
     return data_resep_pribadi
 
+#menabah resep pribadi
+def tambah_resep_pribadi(index, data):
+    print("=== Tambah Resep Pribadi ===")
+    list_resep_pribadi = data_resep_pribadi()
+    nama_resep = input("Masukkan nama resep: ")
+    for i in range(len(list_resep_pribadi)):
+        if nama_resep == list_resep_pribadi[i][1]:
+            print("Resep sudah ada")
+            return
+    bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ")
+    langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ")
+
+    new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
+    with open ("resep_user.txt", "a") as file:
+        file.write(f"{new_resep}\n")
+        print("\nResep berhasil di tambahkan")
+
 #data resep pribadi user
 def resep_pribadi_user(index, data):
     list_resep_pribadi = data_resep_pribadi()
@@ -405,7 +434,7 @@ def resep_pribadi_user(index, data):
             list_resep_user.append(list_resep_pribadi[i])
     return list_resep_user
 
-#detai resep user
+#detai resep pribadi user
 def resep_pribadi_detail (nama):
     with open("resep_user.txt", "r") as file:
         lines = file.readlines()
@@ -474,10 +503,20 @@ def menu_mira(index, data):
         elif pilih_menu == "3":
             print(f"\n=== PROFILE ===\nProfile Name: {data[index][3]}\nUsername: @{data[index][0]}\nEmail: {data[index][1]}\n")
             while True:
-                print("="*30 +"\n1. Melihat Bookmark\n2. Melihat Resep Pribadi\n3. Mengubah Profile Name\n4. Back")
+                print("="*30 +"\n1. Bookmark\n2. Resep Pribadi\n3. Mengubah Profile Name\n4. Back")
                 pilih_profile = input("Pilihanmu: ")
                 if pilih_profile == "1":
-                    profile_bookmark(index, data)  
+                    while True:
+                        print("\n1. Melihat Bookmark\n2. Menghapus Bookmark\n3. Back")
+                        pilih_bookmark_profile = input("Pilihanmu: ")
+                        if pilih_bookmark_profile == "1":
+                            profile_bookmark(index, data)
+                            pilih_bookmark_user(index, data)
+                        elif pilih_bookmark_profile == "2":
+                            profile_bookmark(index, data)
+                            hapus_bookmark(index,data)
+                        elif pilih_bookmark_profile == "3":
+                            break
                 elif pilih_profile == "2":
                     profile_resep_pribadi(index, data)
                 elif pilih_profile == "3":
