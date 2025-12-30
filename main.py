@@ -65,7 +65,7 @@ def login():
 
         password = input("Masukkan Password: ")
         if index_user != -1:
-            if key_user == data_user[index_user][1] or key_user == data_user[index_user][0] and password == data_user [index_user][2]:
+            if (key_user == data_user[index_user][1] and password == data_user [index_user][2]) or (key_user == data_user[index_user][0] and password == data_user [index_user][2]):
                 print("Selamat anda berhasil Login")
                 return True, index_user, data_user
             else:
@@ -80,7 +80,7 @@ def register():
     data_user = ambildata()
     #Memasukkan email baru
     while True:
-        print("\n=== Lakukan Sign Up ===")
+        print("\n=== Lakukan Register ===")
         new_email = input("Masukkan Email: ")
         cek_email = valid_email(new_email)
         confirm_email = cari_index_email(data_user, new_email)
@@ -128,7 +128,7 @@ def register():
     new_data_user = f"{new_username}|{new_email}|{new_password}|{new_profile_name}"
     with open ("data_user.txt", "a") as file:
         file.write(f"{new_data_user}\n")
-    print("\nSign Up berhasil")
+    print("\nRegister berhasil")
 
 #fungsi menampilkan bahan
 def tampil_bahan():
