@@ -191,9 +191,13 @@ def pilih_resep(hasil):
     print("\n=== REKOMENDASI RESEP ===")
     for i in range(len(hasil)):
         print(str(i+1) + ". " + hasil[i]["nama"])
-
+    print(f"{len(hasil)+1}. Back" )
     pilih = int(input("Pilih nomor resep: ")) - 1
-    return hasil[pilih]
+    print(len(hasil))
+    if pilih == len(hasil):
+        return -1
+    else:
+        return hasil[pilih]
 
 # DETAIL RESEP
 def detail_resep(resep):
@@ -272,7 +276,10 @@ def comment(resep, index, data):
                 new_comment = f"{resep["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
                 with open ("comment.txt", "a") as file:
                     file.write(f"{new_comment}\n")
-                    print("\nComment berhasil di tambahkan")
+                print("\nComment berhasil di tambahkan")
+                lihat_comment_resep = lihat_comment(list_comment, resep["nama"])
+                for i in range(len(lihat_comment_resep)):
+                    print("\n" + "=" * 50 + f"\nPengirim: {lihat_comment_resep[i][1]}\nUsername: @{lihat_comment_resep[i][2]}\nComment:\n{lihat_comment_resep[i][3]}\n"+ "=" * 50)
                     break
         elif pilih_tulis == "2":
             break
@@ -377,6 +384,7 @@ def hapus_bookmark (index, data):
                     with open("bookmark.txt", "w") as file:
                         for item in list_data_bookmark:
                             file.write(item[0] + "|" + item[1]+"\n")
+                    print("Resep berhasil dihapus")
                     break
         else:
             print("Pilihan tidak ditemukan")
@@ -420,13 +428,29 @@ def data_resep_pribadi():
 def tambah_resep_pribadi(index, data):
     print("=== Tambah Resep Pribadi ===")
     list_resep_pribadi = data_resep_pribadi()
-    nama_resep = input("Masukkan nama resep: ")
-    for i in range(len(list_resep_pribadi)):
-        if nama_resep == list_resep_pribadi[i][1]:
-            print("Resep sudah ada")
-            return
-    bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ")
-    langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ")
+    
+    while True:
+        nama_resep = input("Masukkan nama resep: ")
+        for i in range(len(list_resep_pribadi)):
+            if nama_resep == list_resep_pribadi[i][1]:
+                print("Resep sudah ada")
+                return
+        if nama_resep == "":
+            print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
+        else:
+            break
+    while True:
+        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ")
+        if bahan_resep == "":
+            print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
+        else:
+            break
+    while True:
+        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ")
+        if langkah_resep == "":
+            print("Langkah tidak boleh kosong")
+        else:
+            break
 
     new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
     with open ("resep_user.txt", "a") as file:
@@ -700,19 +724,23 @@ def menu_mira(index, data):
             if len(hasil) == 0:
                 print("Tidak ada resep yang cocok.")
             else:
-                resep = pilih_resep(hasil)
-                detail_resep(resep)
                 while True:
-                    print("\n1. Melihat dan menulis comment\n2. Masukkan ke dalam Bookmark\n3. Back")
-                    pilih = input("Pilih: ")
-                    if pilih == "1":
-                        comment(resep, index, data)
-                    elif pilih == "2":
-                        bookmark(resep, index, data)
-                    elif pilih == "3":
+                    resep = pilih_resep(hasil)
+                    if resep == -1:
                         break
                     else:
-                        print("Pilihan tidak ditemukan")
+                        detail_resep(resep)
+                    while True:
+                        print("\n1. Melihat dan menulis comment\n2. Masukkan ke dalam Bookmark\n3. Back")
+                        pilih = input("Pilih: ")
+                        if pilih == "1":
+                            comment(resep, index, data)
+                        elif pilih == "2":
+                            bookmark(resep, index, data)
+                        elif pilih == "3":
+                            break
+                        else:
+                            print("Pilihan tidak ditemukan")
         elif pilih_menu == "2":
             tambah_resep_pribadi(index, data)
         elif pilih_menu == "3":
