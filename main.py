@@ -54,7 +54,7 @@ def login():
     data_user = ambildata()
     while True:
         print("\n=== Lakukan Login ===")
-        key_user = input("Masukkan Email atau Username: ")
+        key_user = input("Masukkan Email atau Username: ").strip()
         #cek apakah email atau username
         if "@" in key_user:
             key_user = key_user
@@ -63,7 +63,7 @@ def login():
             key_user = key_user.lower()
             index_user = cari_index_username(data_user, key_user)
 
-        password = input("Masukkan Password: ")
+        password = input("Masukkan Password: ").strip()
         if index_user != -1:
             if (key_user == data_user[index_user][1] and password == data_user [index_user][2]) or (key_user == data_user[index_user][0] and password == data_user [index_user][2]):
                 print("Selamat anda berhasil Login")
@@ -111,7 +111,7 @@ def register():
 
     #memasukkan password baru
     while True:
-        new_password = input("Masukkan Password: ")
+        new_password = input("Masukkan Password: ").strip()
         if new_password == "":
             print("\nPassword tidak boleh kosong, silahkan isi")
         else: 
@@ -430,39 +430,6 @@ def data_resep_pribadi():
         data_resep_pribadi.append(line.strip().split("|"))
     return data_resep_pribadi
 
-#menabah resep pribadi
-def tambah_resep_pribadi(index, data):
-    print("=== Tambah Resep Pribadi ===")
-    list_resep_pribadi = data_resep_pribadi()
-    
-    while True:
-        nama_resep = input("Masukkan nama resep: ").strip()
-        for i in range(len(list_resep_pribadi)):
-            if nama_resep == list_resep_pribadi[i][1]:
-                print("Resep sudah ada")
-                return
-        if nama_resep == "":
-            print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
-        else:
-            break
-    while True:
-        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
-        if bahan_resep == "":
-            print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
-        else:
-            break
-    while True:
-        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
-        if langkah_resep == "":
-            print("Langkah tidak boleh kosong")
-        else:
-            break
-
-    new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
-    with open ("resep_user.txt", "a") as file:
-        file.write(f"{new_resep}\n")
-        print("\nResep berhasil di tambahkan")
-
 #data resep pribadi user
 def resep_pribadi_user(index, data):
     list_resep_pribadi = data_resep_pribadi()
@@ -487,6 +454,64 @@ def resep_pribadi_detail (nama):
             }
             detail_resep(resep)
             break
+
+#menabah resep pribadi
+def tambah_resep_pribadi(index, data):
+    print("=== Tambah Resep Pribadi ===")
+    list_resep_pribadi = data_resep_pribadi()
+    
+    while True:
+        nama_resep = input("Masukkan nama resep: ").strip()
+        for i in range(len(list_resep_pribadi)):
+            if nama_resep == list_resep_pribadi[i][1]:
+                print("Resep sudah ada")
+                return
+        if nama_resep == "":
+            print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
+        else:
+            break
+    while True:
+        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
+        if bahan_resep == "":
+            print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
+        else:
+            break
+    while True:
+        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
+        if langkah_resep == "":
+            print("Langkah-langkah tidak boleh kosong. Silakan masukkan langkah kembali")
+        else:
+            break
+    resep = {
+            "nama": nama_resep,
+            "bahan": bahan_resep.split(";"),
+            "langkah": langkah_resep.split(";")}
+    detail_resep(resep)
+
+    confirm = input("="*50 + "\n1. Simpan resep\n2. Hapus resep\nPilihanmu: ").strip()
+    if confirm == "1":
+        new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
+
+        with open ("resep_user.txt", "a") as file:
+            file.write(f"{new_resep}\n")
+            print("\nResep berhasil di tambahkan")
+    elif confirm == "2":
+        print("Resep batal disimpan")
+    else:
+        print("Pilihan tidak ditemukan")
+
+#hapus resep pribadi
+def hapus_resep_pribadi (index, data, nama):
+    list_data_resep_pribadi = data_resep_pribadi()
+    for i in range(len(list_data_resep_pribadi)):
+        if data[index][0] == list_data_resep_pribadi[i][0] and nama == list_data_resep_pribadi[i][1]:
+            list_data_resep_pribadi.pop(i)
+            with open("resep_user.txt", "w") as file:
+                for item in list_data_resep_pribadi:
+                    file.write(item[0] + "|" + item[1]+ "|" + item[2]+ "|" + item[3]+"\n")
+            print("Resep pribadi berhasil dihapus!")
+            break
+
 #resep pribadi di profile
 def profile_resep_pribadi(index, data):
     list_resep_pribadi = resep_pribadi_user(index, data)
@@ -494,51 +519,36 @@ def profile_resep_pribadi(index, data):
         print("\nBelum ada Resep Pribadi!!")
         return -1
     else:
-        print("\nResep Pribadimu:")
-        for i in range(len(list_resep_pribadi)):
-            print(f"{i+1}. {list_resep_pribadi[i][1]}")
+        last_pilih = None
+        while True:
+            print("\nResep Pribadimu:")
+            for i in range(len(list_resep_pribadi)):
+                print(f"{i+1}. {list_resep_pribadi[i][1]}")
+            print(f"{len(list_resep_pribadi)+1}. Back")
+            if last_pilih is not None:
+                print(f"{len(list_resep_pribadi)+2}. Hapus resep")
+            
+            pilih_resep_pribadi = input("Pilihanmu: ")
+            valid_pilih = "1234567890"
+            valid = True
+            for i in pilih_resep_pribadi:
+                if i not in valid_pilih:
+                    valid = False
+            if valid:
+                pilih_resep_pribadi = int(pilih_resep_pribadi)-1
+                if pilih_resep_pribadi == len(list_resep_pribadi):
+                    return
+                elif pilih_resep_pribadi == len(list_resep_pribadi)+1 and last_pilih != None:
+                    hapus_resep_pribadi(index, data, last_pilih)
+                    last_pilih = None
+                elif pilih_resep_pribadi in range(len(list_resep_pribadi)):
+                    resep_pribadi_detail(list_resep_pribadi[pilih_resep_pribadi][1])
+                    last_pilih = list_resep_pribadi[pilih_resep_pribadi][1]
+                else:
+                    print("Pilihan tidak ditemukan")
+            else:
+                print("Pilihan tidak ditemukan")
 
-def pilih_resep_pribadi(index, data):
-    list_resep_pribadi = resep_pribadi_user(index, data)
-    pilih_resep_pribadi = input("Pilihanmu: ")
-    valid_pilih = "1234567890"
-    valid = True
-    for i in pilih_resep_pribadi:
-        if i not in valid_pilih:
-            valid = False
-    if valid:
-        pilih_resep_pribadi = int(pilih_resep_pribadi)-1
-        if pilih_resep_pribadi in range(len(list_resep_pribadi)):
-            resep_pribadi_detail(list_resep_pribadi[pilih_resep_pribadi][1])
-        else:
-            print("Pilihan tidak ditemukan")
-    else:
-        print("Pilihan tidak ditemukan")
-
-def hapus_resep_prbadi (index, data):
-    list_data_resep_pribadi = data_resep_pribadi()
-    list_resep_pribadi = resep_pribadi_user(index, data)
-    pilih_bookmark = input("Pilihanmu: ")
-    valid_pilih = "1234567890"
-    valid = True
-    for i in pilih_bookmark:
-        if i not in valid_pilih:
-            valid = False
-    if valid:
-        pilih_bookmark = int(pilih_bookmark)-1
-        if pilih_bookmark in range(len(list_resep_pribadi)):
-            for i in range(len(list_data_resep_pribadi)):
-                if data[index][0] == list_data_resep_pribadi[i][0] and list_resep_pribadi[pilih_bookmark][1] == list_data_resep_pribadi[i][1]:
-                    list_data_resep_pribadi.pop(i)
-                    with open("resep_user.txt", "w") as file:
-                        for item in list_data_resep_pribadi:
-                            file.write(item[0] + "|" + item[1]+ "|" + item[2]+ "|" + item[3]+"\n")
-                    print("Resep pribadi berhasil dihapus!")
-                    break
-        else:
-            print("Pilihan tidak ditemukan")
-    else:
-        print("Pilihan tidak ditemukan")
 
 #ambil data Admin
 def ambil_data_admin():
@@ -597,7 +607,7 @@ def tambah_resep_admin():
         print("Pilih Bahan Dasar")
         for i in range(len(list_bahan)):
             print(str(i+1) + ". " + list_bahan[i])
-        pilih_bahan = input("Pilihanmu: ")
+        pilih_bahan = input("Pilihanmu: ").strip()
         valid_pilih = "1234567890"
         valid = True
         for i in pilih_bahan:
@@ -615,20 +625,46 @@ def tambah_resep_admin():
 
     #nama resep
     list_reseps = list_resep()
+    while True:
+        nama_resep = input("Masukkan nama resep: ").strip()
+        for i in range(len(list_reseps)):
+            if nama_resep == list_reseps[i][1]:
+                print("Resep sudah ada. Silakan masukkan nama resep kembali")
+                break
+        if nama_resep == "":
+            print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
+        else:
+            break
+    #bahan-bahan 
+    while True:
+        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
+        if bahan_resep == "":
+            print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
+        else:
+            break
+    #langkah-langkah
+    while True:
+        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
+        if langkah_resep == "":
+            print("Langkah-langkah tidak boleh kosong. Silakan masukkan langkah kembali")
+        else:
+            break
 
-    nama_resep = input("Masukkan nama resep: ")
-    for i in range(len(list_reseps)):
-        if nama_resep == list_reseps[i][1]:
-            print("Resep sudah ada")
-            return
-
-    bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ") #bahan
-    langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ") #langkah-langkah
-
-    new_resep = f"{bahan},{nama_resep},{bahan_resep},{langkah_resep}"
-    with open ("resep.csv", "a") as file:
-        file.write(f"{new_resep}\n")
-        print("\nResep berhasil di tambahkan")
+    resep = {
+            "nama": nama_resep,
+            "bahan": bahan_resep.split(";"),
+            "langkah": langkah_resep.split(";")}
+    detail_resep(resep)
+    confirm = input("="*50 + "\n1. Simpan resep\n2. Hapus resep\nPilihanmu: ").strip()
+    if confirm == "1":
+        new_resep = f"{bahan},{nama_resep},{bahan_resep},{langkah_resep}"
+        with open ("resep.csv", "a") as file:
+            file.write(f"{new_resep}\n")
+            print("\nResep berhasil di tambahkan")
+    elif confirm == "2":
+        print("Resep batal disimpan")
+    else:
+        print("Pilihan tidak ditemukan")
 
 #hapus resep admin
 def hapus_resep_admin():
@@ -637,11 +673,11 @@ def hapus_resep_admin():
     for i in range(len(list_reseps)):
         list_nama_resep.append(list_reseps[i][1])
 
-    print("Pilih resep yang ingin di hapus: ")
+    print("Pilih resep yang ingin dihapus: ")
     for i in range(len(list_reseps)):
         print(f"{i+1}. {list_reseps[i][1]}")
 
-    pilih_reseps = input("Pilihanmu: ")
+    pilih_reseps = input("Pilihanmu: ").strip()
     valid_pilih = "1234567890"
     valid = True
     for i in pilih_reseps:
@@ -669,11 +705,11 @@ def ubah_resep_admin():
     for i in range(len(list_reseps)):
         list_nama_resep.append(list_reseps[i][1])
 
-    print("Pilih resep yang ingin di ubah: ")
+    print("Pilih resep yang ingin diubah: ")
     for i in range(len(list_reseps)):
         print(f"{i+1}. {list_reseps[i][1]}")
 
-    pilih_reseps = input("Pilihanmu: ")
+    pilih_reseps = input("Pilihanmu: ").strip()
     valid_pilih = "1234567890"
     valid = True
     for i in pilih_reseps:
@@ -682,9 +718,79 @@ def ubah_resep_admin():
     if valid:
         pilih_reseps = int(pilih_reseps)-1
         if pilih_reseps in range(len(list_reseps)):
-            bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ") #bahan
-            langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ") #langkah-langkah
-            list_reseps[pilih_reseps][2], list_reseps[pilih_reseps][3] = bahan_resep, langkah_resep
+            while True:
+                resep = {"nama": list_reseps[pilih_reseps][1],
+                        "bahan": list_reseps[pilih_reseps][2].split(";"),
+                        "langkah": list_reseps[pilih_reseps][3].split(";")}
+                detail_resep(resep)
+                pilih_ubah = input("Yang ingin diubah:\n1. Nama resep\n2. Bahan-bahan\n3. Langkah-langkah\nPilihanmu: ").strip()
+                if pilih_ubah == "1":
+                    while True:
+                        nama_resep = input("Masukkan nama resep: ").strip()
+                        sama = False
+                        lanjut = False
+                        for i in range(len(list_reseps)):
+                            if nama_resep == list_reseps[i][1]:
+                                print("Nama resep sama. Silakan masukkan nama resep kembali")
+                                sama = True
+                                break
+                        if sama:
+                            continue
+                        elif nama_resep == "":
+                            print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
+                        else:
+                            list_reseps[pilih_reseps][1] = nama_resep
+                            lanjut = True
+                            break
+                    if lanjut:
+                        break
+                elif pilih_ubah == "2":
+                    while True:
+                        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
+                        sama = False
+                        lanjut = False
+                        for i in range(len(list_reseps)):
+                            if bahan_resep == list_reseps[i][2]:
+                                print("Bahan-bahan sama. Silakan masukkan bahan kembali")
+                                sama = True
+                                break
+                        if sama:
+                            continue
+                        elif bahan_resep == "":
+                            print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
+                        else:
+                            list_reseps[pilih_reseps][2] = bahan_resep
+                            lanjut = True
+                            break
+                    if lanjut:
+                        break
+                elif pilih_ubah == "3":
+                    while True:
+                        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
+                        sama = False
+                        lanjut = False
+                        for i in range(len(list_reseps)):
+                            if langkah_resep == list_reseps[i][3]:
+                                print("Langkah-langkah sama. Silakan masukkan langkah kembali")
+                                sama = True
+                                break
+                        if sama:
+                            continue
+                        elif langkah_resep == "":
+                            print("Langkah-langkah tidak boleh kosong. Silakan masukkan langkah kembali")
+                        else:
+                            list_reseps[pilih_reseps][3] = langkah_resep
+                            lanjut = True
+                            break
+                    if lanjut:
+                        break
+                else:
+                    print("Pilihan tidak ditemukan")
+
+            resep = {"nama": list_reseps[pilih_reseps][1],
+                    "bahan": list_reseps[pilih_reseps][2].split(";"),
+                    "langkah": list_reseps[pilih_reseps][3].split(";")}
+            detail_resep(resep)
             with open("resep.csv", "w") as file:
                 file.write("bahan_dasar,nama_resep,bahan_tambahan,langkah-langkah\n")
             with open("resep.csv", "a") as file:
@@ -701,7 +807,7 @@ def menu_admin(index, data):
     while True:
         print(f"\n=== Halo Admin {data[index][3]}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
         print("1. Menambah resep\n2. Menghapus resep\n3. Mengubah resep\n4. Log Out")
-        pilih_menu_admin = input("Pilihanmu: ")
+        pilih_menu_admin = input("Pilihanmu: ").strip()
         if pilih_menu_admin == "1":
             tambah_resep_admin()
         elif pilih_menu_admin == "2":
@@ -713,14 +819,12 @@ def menu_admin(index, data):
             break
 
 
-        
 #menu user
 def menu_mira(index, data):
     while True:
         print(f"\n=== Halo {data[index][3]}, Selamat datang di Mira Apps ===\nMy Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
         print("1. Mencari resep\n2. Menulis resep\n3. Profile\n4. Log Out")
-        pilih_menu = input("Pilihanmu: ")
-
+        pilih_menu = input("Pilihanmu: ").strip()
         if pilih_menu == "1":
             bahan = tampil_bahan()
             bahan_user = pilih_bahan(bahan)
@@ -738,7 +842,7 @@ def menu_mira(index, data):
                         detail_resep(resep)
                     while True:
                         print("\n1. Melihat dan menulis comment\n2. Masukkan ke dalam Bookmark\n3. Back")
-                        pilih = input("Pilih: ")
+                        pilih = input("Pilih: ").strip()
                         if pilih == "1":
                             comment(resep, index, data)
                         elif pilih == "2":
@@ -750,10 +854,10 @@ def menu_mira(index, data):
         elif pilih_menu == "2":
             tambah_resep_pribadi(index, data)
         elif pilih_menu == "3":
-            print(f"\n=== PROFILE ===\nProfile Name: {data[index][3]}\nUsername: @{data[index][0]}\nEmail: {data[index][1]}\n")
             while True:
+                print(f"\n========== PROFILE ==========\nProfile Name: {data[index][3]}\nUsername: @{data[index][0]}\nEmail: {data[index][1]}\n")
                 print("="*30 +"\n1. Bookmark\n2. Resep Pribadi\n3. Mengubah Profile Name\n4. Back")
-                pilih_profile = input("Pilihanmu: ")
+                pilih_profile = input("Pilihanmu: ").strip()
                 if pilih_profile == "1":
                     while True:
                         print("\n1. Melihat Bookmark\n2. Menghapus Bookmark\n3. Back")
@@ -769,19 +873,7 @@ def menu_mira(index, data):
                         else:
                             print("Pilihan tidak ditemukan")
                 elif pilih_profile == "2":
-                    while True:
-                        print("\n1. Melihat Resep Pribadi\n2. Menghapus Resep Pribadi\n3. Back")
-                        pilih_resep_profile = input("Pilihanmu: ")
-                        if pilih_resep_profile == "1":
-                            if profile_resep_pribadi(index, data) != -1:
-                                pilih_resep_pribadi(index,data)
-                        elif pilih_resep_profile == "2":
-                            if profile_resep_pribadi(index, data) != -1:
-                                hapus_resep_prbadi(index,data)
-                        elif pilih_resep_profile == "3":
-                            break
-                        else:
-                            print("Pilihan tidak ditemukan")
+                    profile_resep_pribadi(index, data)
                 elif pilih_profile == "3":
                     change_name(data, index)
                 elif pilih_profile == "4":
@@ -798,11 +890,11 @@ def menu_mira(index, data):
 while True:
     print("=== Selamat Datang di Mira Apps ===")
     print("1. Kamu seorang Pengguna\n2. Kamu seorang Admin\n3. Keluar")
-    pilih = input("Pilihanmu: ")
+    pilih = input("Pilihanmu: ").strip()
     if pilih == "1":
         while True:
             print("1. Login\n2. Register\n3. Back")
-            pilih_user = input("Pilihanmu: ")
+            pilih_user = input("Pilihanmu: ").strip()
             if (pilih_user == "1"):
                 berhasil, index, data = login()
                 if berhasil:
