@@ -148,10 +148,15 @@ def pilih_bahan(bahan):
 
     bahan_user = []
 
-    for p in pilihan: 
-        index = int(p.strip()) - 1 
-        if index >= 0 and index < len(bahan):
-            bahan_user.append(bahan[index])
+    valid_pilih = "1234567890"
+    for p in pilihan:
+        valid = True
+        if p not in valid_pilih:
+            valid = False
+        if valid:
+            index = int(p.strip()) - 1 
+            if index >= 0 and index < len(bahan):
+                bahan_user.append(bahan[index])
 
     return bahan_user
     
