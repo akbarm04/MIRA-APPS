@@ -88,7 +88,7 @@ def register():
             break
         elif new_email == "":
             print("\nEmail tidak boleh kosong, silahkan isi")
-        elif not cek_email:
+        elif cek_email == False:
             print("\nFormat email salah, silahkan masukkan email yang benar")
         else:
             print("\nEmail sudah ada, silahkan gunakan email lain.")
@@ -102,7 +102,7 @@ def register():
             break
         elif new_username == "":
             print("\nUsername tidak boleh kosong, silahkan isi")
-        elif not cek_username:
+        elif cek_username == False:
             print('\nUsername hanya bisa diisi huruf, angka, titik "." dan underscore "_"')
         elif new_username == "." or new_username == "_" or new_username == "._" or new_username == "_.":
             print("Format username salah")
@@ -197,12 +197,20 @@ def pilih_resep(hasil):
     for i in range(len(hasil)):
         print(str(i+1) + ". " + hasil[i]["nama"])
     print(f"{len(hasil)+1}. Back" )
-    pilih = int(input("Pilih nomor resep: ")) - 1
-    print(len(hasil))
-    if pilih == len(hasil):
-        return -1
-    else:
-        return hasil[pilih]
+    pilih = input("Pilih nomor resep: ")
+    valid_pilih = "1234567890"
+    for p in pilih:
+        valid = True
+        if p not in valid_pilih:
+            valid = False
+        if valid:
+            pilih = int(pilih) - 1
+            if pilih == len(hasil):
+                return -1
+            else:
+                return hasil[pilih]
+        else:
+            return -2
 
 # DETAIL RESEP
 def detail_resep(resep):
@@ -843,19 +851,21 @@ def menu_mira(index, data):
                     resep = pilih_resep(hasil)
                     if resep == -1:
                         break
+                    elif resep == -2:
+                        print("Pilihan tidak ditemukan")
                     else:
                         detail_resep(resep)
-                    while True:
-                        print("\n1. Melihat dan menulis comment\n2. Masukkan ke dalam Bookmark\n3. Back")
-                        pilih = input("Pilih: ").strip()
-                        if pilih == "1":
-                            comment(resep, index, data)
-                        elif pilih == "2":
-                            bookmark(resep, index, data)
-                        elif pilih == "3":
-                            break
-                        else:
-                            print("Pilihan tidak ditemukan")
+                        while True:
+                            print("\n1. Melihat dan menulis comment\n2. Masukkan ke dalam Bookmark\n3. Back")
+                            pilih = input("Pilih: ").strip()
+                            if pilih == "1":
+                                comment(resep, index, data)
+                            elif pilih == "2":
+                                bookmark(resep, index, data)
+                            elif pilih == "3":
+                                break
+                            else:
+                                print("Pilihan tidak ditemukan")
         elif pilih_menu == "2":
             tambah_resep_pribadi(index, data)
         elif pilih_menu == "3":
