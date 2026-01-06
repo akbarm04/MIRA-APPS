@@ -590,7 +590,7 @@ def login_admin():
 
         password = input("Masukkan Password: ")
         if index_user != -1:
-            if key_user == data_admin[index_user][1] or key_user == data_admin[index_user][0] and password == data_admin [index_user][2]:
+            if (key_user == data_admin[index_user][1] and password == data_admin [index_user][2]) or (key_user == data_admin[index_user][0] and password == data_admin [index_user][2]):
                 print("Selamat anda berhasil Login")
                 return True, index_user, data_admin
             else:
