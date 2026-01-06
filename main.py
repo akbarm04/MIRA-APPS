@@ -297,6 +297,7 @@ def comment(resep, index, data):
                     print("\n" + "=" * 50 + f"\nPengirim: {lihat_comment_resep[i][1]}\nUsername: @{lihat_comment_resep[i][2]}\nComment:\n{lihat_comment_resep[i][3]}\n"+ "=" * 50)
                     break
         elif pilih_tulis == "2":
+            detail_resep(resep)
             break
         else:
             print("Pilihan tidak ditemukan\n")
@@ -534,6 +535,7 @@ def profile_resep_pribadi(index, data):
     else:
         last_pilih = None
         while True:
+            list_resep_pribadi = resep_pribadi_user(index, data)
             print("\nResep Pribadimu:")
             for i in range(len(list_resep_pribadi)):
                 print(f"{i+1}. {list_resep_pribadi[i][1]}")
