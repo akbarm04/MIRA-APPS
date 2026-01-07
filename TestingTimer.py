@@ -31,7 +31,7 @@ def JalankanTimer(NamaResep):
     print(f"Timer {NamaResep} dimulai")
 
     while Detik > 0:
-        print(f"{Detik//60:02d}:{Detik%60:02d}")
+        print(f"Sisa Waktu >> {Detik//60:02}:{Detik%60:02}")
         time.sleep(1)
         Detik -= 1
 
