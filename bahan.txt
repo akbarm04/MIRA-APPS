@@ -1,0 +1,7 @@
+Ayam
+Sapi
+Kambing
+Tahu
+Tempe
+Telur
+Kentang
