@@ -288,7 +288,7 @@ def comment(resep, index, data):
                 print('Maaf tidak bisa menggunakan simbol "|"')
                 break
             else:
-                new_comment = f"{resep["nama"]}|{data[index][3]}|{data[index][0]}|{comment}"
+                new_comment = f"{resep['nama']}|{data[index][3]}|{data[index][0]}|{comment}"
                 with open ("comment.txt", "a") as file:
                     file.write(f"{new_comment}\n")
                 print("\nComment berhasil di tambahkan")
@@ -323,7 +323,7 @@ def bookmark(resep, index, data):
     valid = cek_bookmark(resep, index, data)
     if valid != -1:
         with open("bookmark.txt", "a") as file:
-            file.write(f"{data[index][0]}|{resep["nama"]}\n")
+            file.write(f"{data[index][0]}|{resep['nama']}\n")
         print("Resep berhasil dimasukkan ke dalam bookmark")
     else:
         print("Resep sudah ada di bookmark")
