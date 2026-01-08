@@ -1,41 +1,34 @@
-from modules import auth, user, admin
+from modules.auth import login_user, register_user, login_admin
+from modules.user import menu_user
+from modules.admin import menu_admin
 
-def main():
-    while True:
-        print("=== Selamat Datang di Mira Apps ===")
-        print("1. Kamu seorang Pengguna\n2. Kamu seorang Admin\n3. Keluar")
-        pilih = input("Pilihanmu: ").strip()
-        
-        if pilih == "1":
-            user_flow()
-        elif pilih == "2":
-            admin_flow()
-        elif pilih == "3":
-            print("Selamat Tinggal")
-            break
-        else:
-            print("Pilihan tidak ditemukan")
-
-def user_flow():
-    while True:
-        print("1. Login\n2. Register\n3. Back")
-        pilih_user = input("Pilihanmu: ").strip()
-        
-        if pilih_user == "1":
-            success, user_index, user_data = auth.login_user()
-            if success:
-                user.user_menu(user_index, user_data)
-        elif pilih_user == "2":
-            auth.register_user()
-        elif pilih_user == "3":
-            break
-        else:
-            print("Pilihan tidak ditemukan")
-
-def admin_flow():
-    success, admin_index, admin_data = auth.login_admin()
-    if success:
-        admin.admin_menu(admin_index, admin_data)
-
-if __name__ == "__main__":
-    main()
+#program utama
+while True:
+    print("=== Selamat Datang di Mira Apps ===")
+    print("1. Kamu seorang Pengguna\n2. Kamu seorang Admin\n3. Keluar")
+    pilih = input("Pilihanmu: ").strip()
+    if pilih == "1":
+        while True:
+            print("1. Login\n2. Register\n3. Back")
+            pilih_user = input("Pilihanmu: ").strip()
+            if (pilih_user == "1"):
+                berhasil, index, data = login()
+                if berhasil:
+                    menu_mira(index, data)
+            elif(pilih_user == "2"):
+                register()
+            elif (pilih_user == "3"):
+                print("Selamat Tinggal")
+                break
+            else:
+                print("Pilihan tidak ditemukan")
+    elif pilih == "2":
+        print("Ini Perintah Admin")
+        berhasil, index, data = login_admin()
+        if berhasil:
+            menu_admin(index, data)
+    elif pilih == "3":
+        print("Selamat Tinggal")
+        break
+    else:
+        print("Pilihan tidak ditemukan")

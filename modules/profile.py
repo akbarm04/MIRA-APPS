@@ -2,103 +2,163 @@ from utils.file_utils import baca_data, tulis_data
 from . import bookmark
 from .recipe import tampil_detail_resep
 
-# Ganti Profile Name
-def ganti_nama_profile(user_data, user_index):
-    print(f"Profile name sekarang: {user_data[user_index][3]}")
-    
+#ganti Profile Name
+def change_name(data, index):
+    print(f"Profile name sekarang: {data[index][3]}")
     while True:
-        nama_baru = input("Silahkan masukkan Profile Name baru anda: ").strip()
-        
-        if nama_baru == "":
+        change_name = input("Silahkan masukkan Profile Name baru anda: ").strip()
+        if change_name == "":
             print("Nama tidak boleh kosong")
-        elif "|" in nama_baru:
+        elif "|" in change_name:
             print('Nama tidak boleh mengandung "|"')
-        elif user_data[user_index][3] == nama_baru:
+        elif data[index][3] == change_name:
             print("Nama sama. Silakan masukkan nama baru")
         else: 
-            # Mengganti nama di data_user.txt
-            user_data[user_index][3] = nama_baru
-            tulis_data("data/data_user.txt", user_data)
+            #mengganti nama di data_user.txt
+            data[index][3] = change_name
+            with open("data_user.txt", "w") as file:
+                for i in data:
+                    file.write(i[0] + "|" + i[1] + "|" + i[2] + "|" + i[3] + "\n")
 
-            # Mengganti nama di comment.txt
-            komentar = baca_data("data/comment.txt")
-            for kom in komentar:
-                if kom[2] == user_data[user_index][0]:
-                    kom[1] = nama_baru
-            tulis_data("data/comment.txt", komentar)
-            
+            #mengganti nama di comment,txt
+            list_comment = data_comment()
+            for j in range(len(list_comment)):
+                if list_comment[j][2] == data[index][0]:
+                    list_comment[j][1] = change_name
+            with open("comment.txt", "w") as file_comment:
+                for k in list_comment:
+                    file_comment.write(k[0] + "|" + k[1] + "|" + k[2] + "|" + k[3] +"\n")
             print(f"Profile Name berhasil diganti")
             break
 
-# Data resep pribadi user
-def ambil_resep_pribadi_user(user_index, user_data):
-    semua_resep = baca_data("data/resep_user.txt")
-    resep_user = []
-    
-    for resep in semua_resep:
-        if resep[0] == user_data[user_index][0]:
-            resep_user.append(resep)
-    
-    return resep_user
+#data resep pribadi
+def data_resep_pribadi():
+    with open("resep_user.txt", "r") as file:
+            lines = file.readlines()
+    data_resep_pribadi = []
+    for line in lines:
+        data_resep_pribadi.append(line.strip().split("|"))
+    return data_resep_pribadi
 
-# Detail resep pribadi user
-def tampil_detail_resep_pribadi(nama_resep):
-    resep_data = baca_data("data/resep_user.txt")
-    
-    for resep in resep_data:
-        if resep[1] == nama_resep:
-            resep_detail = {
-                "nama": resep[1],
-                "bahan": resep[2].split(";"),
-                "langkah": resep[3].split(";")
+#data resep pribadi user
+def resep_pribadi_user(index, data):
+    list_resep_pribadi = data_resep_pribadi()
+    list_resep_user = []
+    for i in range(len(list_resep_pribadi)):
+        if list_resep_pribadi[i][0] == data[index][0]:
+            list_resep_user.append(list_resep_pribadi[i])
+    return list_resep_user
+
+#detai resep pribadi user
+def resep_pribadi_detail (nama):
+    with open("resep_user.txt", "r") as file:
+        lines = file.readlines()
+
+    for line in lines:
+        hasil = line.strip().split("|")
+        if hasil[1] == nama:
+            resep = {
+                "nama": hasil[1],
+                "bahan": hasil[2].split(";"),
+                "langkah": hasil[3].split(";")
             }
-            tampil_detail_resep(resep_detail)
+            detail_resep(resep)
             break
 
-# Hapus resep pribadi
-def hapus_resep_pribadi(user_index, user_data, nama_resep):
-    semua_resep = baca_data("data/resep_user.txt")
+#menambah resep pribadi
+def tambah_resep_pribadi(index, data):
+    print("=== Tambah Resep Pribadi ===")
+    list_resep_pribadi = data_resep_pribadi()
     
-    for i in range(len(semua_resep)):
-        if (user_data[user_index][0] == semua_resep[i][0] and 
-            nama_resep == semua_resep[i][1]):
-            semua_resep.pop(i)
-            tulis_data("data/resep_user.txt", semua_resep)
+    while True:
+        nama_resep = input("Masukkan nama resep: ").strip()
+        for i in range(len(list_resep_pribadi)):
+            if nama_resep == list_resep_pribadi[i][1]:
+                print("Resep sudah ada")
+                return
+        if nama_resep == "":
+            print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
+        else:
+            break
+    while True:
+        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
+        if bahan_resep == "":
+            print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
+        else:
+            break
+    while True:
+        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
+        if langkah_resep == "":
+            print("Langkah-langkah tidak boleh kosong. Silakan masukkan langkah kembali")
+        else:
+            break
+    resep = {
+            "nama": nama_resep,
+            "bahan": bahan_resep.split(";"),
+            "langkah": langkah_resep.split(";")}
+    detail_resep(resep)
+
+    confirm = input("="*50 + "\n1. Simpan resep\n2. Hapus resep\nPilihanmu: ").strip()
+    if confirm == "1":
+        new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
+
+        with open ("resep_user.txt", "a") as file:
+            file.write(f"{new_resep}\n")
+            print("\nResep berhasil di tambahkan")
+    elif confirm == "2":
+        print("Resep batal disimpan")
+    else:
+        print("Pilihan tidak ditemukan")
+
+#hapus resep pribadi
+def hapus_resep_pribadi (index, data, nama):
+    list_data_resep_pribadi = data_resep_pribadi()
+    for i in range(len(list_data_resep_pribadi)):
+        if data[index][0] == list_data_resep_pribadi[i][0] and nama == list_data_resep_pribadi[i][1]:
+            list_data_resep_pribadi.pop(i)
+            with open("resep_user.txt", "w") as file:
+                for item in list_data_resep_pribadi:
+                    file.write(item[0] + "|" + item[1]+ "|" + item[2]+ "|" + item[3]+"\n")
             print("Resep pribadi berhasil dihapus!")
             break
 
-# Resep pribadi di profile
-def kelola_resep_pribadi(user_index, user_data):
-    while True:
-        resep_user = ambil_resep_pribadi_user(user_index, user_data)
-        
-        if len(resep_user) == 0:
-            print("\nBelum ada Resep Pribadi!!")
-            return
-        
-        print("\nResep Pribadimu:")
-        for i in range(len(resep_user)):
-            print(f"{i+1}. {resep_user[i][1]}")
-        print(f"{len(resep_user)+1}. Back")
-        
-        pilihan = input("Pilihanmu: ").strip()
-        if pilihan.isdigit():
-            pilihan = int(pilihan) - 1
+#resep pribadi di profile
+def profile_resep_pribadi(index, data):
+    list_resep_pribadi = resep_pribadi_user(index, data)
+    if not list_resep_pribadi:
+        print("\nBelum ada Resep Pribadi!!")
+        return -1
+    else:
+        last_pilih = None
+        while True:
+            list_resep_pribadi = resep_pribadi_user(index, data)
+            print("\nResep Pribadimu:")
+            for i in range(len(list_resep_pribadi)):
+                print(f"{i+1}. {list_resep_pribadi[i][1]}")
+            print(f"{len(list_resep_pribadi)+1}. Back")
+            if last_pilih is not None:
+                print(f"{len(list_resep_pribadi)+2}. Hapus resep")
             
-            if pilihan == len(resep_user):  # Back
-                return
-            elif pilihan >= 0 and pilihan < len(resep_user):
-                tampil_detail_resep_pribadi(resep_user[pilihan][1])
-                resep_terpilih = resep_user[pilihan][1]
-                
-                # Tanya apakah mau hapus
-                pilihan_hapus = input("\nApakah ingin menghapus resep ini? (y/n): ").strip().lower()
-                if pilihan_hapus == 'y':
-                    hapus_resep_pribadi(user_index, user_data, resep_terpilih)
+            pilih_resep_pribadi = input("Pilihanmu: ")
+            valid_pilih = "1234567890"
+            valid = True
+            for i in pilih_resep_pribadi:
+                if i not in valid_pilih:
+                    valid = False
+            if valid:
+                pilih_resep_pribadi = int(pilih_resep_pribadi)-1
+                if pilih_resep_pribadi == len(list_resep_pribadi):
+                    return
+                elif pilih_resep_pribadi == len(list_resep_pribadi)+1 and last_pilih != None:
+                    hapus_resep_pribadi(index, data, last_pilih)
+                    last_pilih = None
+                elif pilih_resep_pribadi in range(len(list_resep_pribadi)):
+                    resep_pribadi_detail(list_resep_pribadi[pilih_resep_pribadi][1])
+                    last_pilih = list_resep_pribadi[pilih_resep_pribadi][1]
+                else:
+                    print("Pilihan tidak ditemukan")
             else:
                 print("Pilihan tidak ditemukan")
-        else:
-            print("Pilihan tidak ditemukan")
 
 # Menu profile
 def menu_profile(user_index, user_data):
