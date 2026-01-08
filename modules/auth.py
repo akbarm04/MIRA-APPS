@@ -1,26 +1,30 @@
-from .validation import cek_email_valid, cek_username_valid
+from .validation import valid_email, valid_username
 from utils.file_utils import baca_data, tambah_data
 
-# Fungsi untuk mencari index email
-def cari_index_email(list_user, cari_email):
-    for i in range(len(list_user)):
-        if list_user[i][1] == cari_email:
+# Fungsi mencari index email
+def cari_index_email(list, cari):
+    for i in range(len(list)):
+        if list[i][1] == cari:
             return i
     return -1
 
-# Fungsi untuk mencari index username
-def cari_index_username(list_user, cari_username):
-    for i in range(len(list_user)):
-        if list_user[i][0] == cari_username:
+# Fungsi mencari index username
+def cari_index_username(list, cari):
+    for i in range(len(list)):
+        if list[i][0] == cari:
             return i
     return -1
 
-# Fungsi login user
-def login_user():
-    data_user = baca_data("data/data_user.txt")
+# Fungsi ambil data user dari file
+def ambildata():
+    return baca_data("data/data_user.txt")
+
+# Fungsi login
+def login():
+    data_user = ambildata()
     print("\n=== Lakukan Login ===")
     key_user = input("Masukkan Email atau Username: ").strip()
-    #cek apakah email atau username
+    
     if "@" in key_user:
         index_user = cari_index_email(data_user, key_user)
     else:
@@ -41,87 +45,95 @@ def login_user():
         print("\nEmail atau Username tidak ditemukan!")
         return False, -1, data_user
 
-# Fungsi register user
-def register_user():
-    data_user = baca_data("data/data_user.txt")
+# Fungsi register
+def register():
+    data_user = ambildata()
+    
     # Memasukkan email baru
     while True:
         print("\n=== Lakukan Register ===")
-        email_baru = input("Masukkan Email: ").strip()
-        email_valid = cek_email_valid(email_baru)
-        index_email = cari_index_email(data_user, email_baru)
+        new_email = input("Masukkan Email: ").strip()
+        cek_email = valid_email(new_email)
+        confirm_email = cari_index_email(data_user, new_email)
         
-        if index_email == -1 and email_valid:
+        if confirm_email == -1 and cek_email:
             break
-        elif email_baru == "":
+        elif new_email == "":
             print("\nEmail tidak boleh kosong, silahkan isi")
-        elif not email_valid:
+        elif not cek_email:
             print("\nFormat email salah, silahkan masukkan email yang benar")
         else:
             print("\nEmail sudah ada, silahkan gunakan email lain.")
 
     # Memasukkan username baru
     while True:
-        username_baru = input("Masukkan Username: ").lower().strip()
-        username_valid = cek_username_valid(username_baru)
-        index_username = cari_index_username(data_user, username_baru)
+        new_username = input("Masukkan Username: ").lower().strip()
+        cek_username = valid_username(new_username)
+        confirm_username = cari_index_username(data_user, new_username)
         
-        if index_username == -1 and username_valid:
+        if confirm_username == -1 and cek_username:
             break
-        elif username_baru == "":
+        elif new_username == "":
             print("\nUsername tidak boleh kosong, silahkan isi")
-        elif not username_valid:
+        elif not cek_username:
             print('\nUsername hanya bisa diisi huruf, angka, titik "." dan underscore "_"')
-        elif username_baru == "." or username_baru == "_" or username_baru == "._" or username_baru == "_.":
+        elif new_username in [".", "_", "._", "_."]:
             print("Format username salah")
         else:
             print("\nUsername sudah terpakai, silahkan gunakan yang lain")
 
     # Memasukkan password baru
     while True:
-        password_baru = input("Masukkan Password: ").strip()
-        if password_baru == "":
+        new_password = input("Masukkan Password: ").strip()
+        if new_password == "":
             print("\nPassword tidak boleh kosong, silahkan isi")
         else: 
             break
     
     # Memasukkan profile name
     while True:
-        profile_name_baru = input("Masukkan Profile Name: ").strip()
-        if profile_name_baru == "":
+        new_profile_name = input("Masukkan Profile Name: ").strip()
+        if new_profile_name == "":
             print("\nProfile Name tidak boleh kosong, silahkan isi")
-        elif "|" in profile_name_baru:
+        elif "|" in new_profile_name:
             print('Nama tidak boleh mengandung "|"')
         else: 
             break
     
-    new_data_user = f"{username_baru}|{email_baru}|{password_baru}|{profile_name_baru}"
-    with open ("data_user.txt", "a") as file:
-        file.write(f"{new_data_user}\n")
+    new_data_user = f"{new_username}|{new_email}|{new_password}|{new_profile_name}"
+    tambah_data("data/data_user.txt", new_data_user)
     print("\nRegister berhasil")
 
-#login untuk admin
+# Ambil data Admin
+def ambil_data_admin():
+    return baca_data("data/data_admin.txt")
+
+# Login untuk admin
 def login_admin():
     data_admin = ambil_data_admin()
-    while True:
-        print("\n=== Lakukan Login ===")
-        key_user = input("Masukkan Email atau Username: ")
-        #cek apakah email atau username
-        if "@" in key_user:
-            key_user = key_user
-            index_user = cari_index_email(data_admin, key_user)
-        else:
-            key_user = key_user.lower()
-            index_user = cari_index_username(data_admin, key_user)
+    print("\n=== Lakukan Login ===")
+    key_user = input("Masukkan Email atau Username: ").strip()
+    
+    if "@" in key_user:
+        index_user = cari_index_email(data_admin, key_user)
+    else:
+        key_user = key_user.lower()
+        index_user = cari_index_username(data_admin, key_user)
 
-        password = input("Masukkan Password: ")
-        if index_user != -1:
-            if (key_user == data_admin[index_user][1] and password == data_admin [index_user][2]) or (key_user == data_admin[index_user][0] and password == data_admin [index_user][2]):
-                print("Selamat anda berhasil Login")
-                return True, index_user, data_admin
-            else:
-                print("\nPassword salah!")
-                return False, -1, data_admin
+    password = input("Masukkan Password: ").strip()
+    
+    if index_user != -1:
+        if (key_user == data_admin[index_user][1] and password == data_admin[index_user][2]) or \
+           (key_user == data_admin[index_user][0] and password == data_admin[index_user][2]):
+            print("Selamat anda berhasil Login")
+            return True, index_user, data_admin
         else:
-            print("\nEmail atau Username tidak ditemukan!")
+            print("\nPassword salah!")
             return False, -1, data_admin
+    else:
+        print("\nEmail atau Username tidak ditemukan!")
+        return False, -1, data_admin
+
+# Alias untuk compatibility
+login_user = login
+register_user = register
