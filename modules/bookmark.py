@@ -1,5 +1,5 @@
 from utils.file_utils import *
-from .recipe import show_recipe_detail
+from . import recipe
 
 # Fungsi mengambil data bookmark
 def get_bookmarks():
@@ -46,7 +46,7 @@ def show_bookmark_detail(recipe_name):
                 "bahan": recipe[2].split(";"),
                 "langkah": recipe[3].split(";")
             }
-            show_recipe_detail(recipe_data)
+            recipe.show_recipe_detail(recipe_data)
             break
 
 # Tampilkan bookmark di profile
