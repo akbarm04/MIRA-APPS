@@ -46,7 +46,16 @@ def show_bookmark_detail(recipe_name):
                 "bahan": recipe[2].split(";"),
                 "langkah": recipe[3].split(";")
             }
-            recipe.show_recipe_detail(recipe_data)
+            print("\n=== DETAIL RESEP ===")
+            print("Nama:", recipe_data["nama"])
+            
+            print("\nBahan:")
+            for ingredient in recipe_data["bahan"]:
+                print("- " + ingredient)
+            
+            print("\nLangkah Memasak:")
+            for i in range(len(recipe_data["langkah"])):
+                print(str(i+1) + ". " + recipe_data["langkah"][i])
             break
 
 # Tampilkan bookmark di profile
