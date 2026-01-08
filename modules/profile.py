@@ -1,109 +1,107 @@
-from utils.file_utils import *
+from utils.file_utils import baca_data, tulis_data
 from . import bookmark
-from .recipe import show_recipe_detail
+from .recipe import tampil_detail_resep
 
 # Ganti Profile Name
-def change_profile_name(user_data, user_index):
+def ganti_nama_profile(user_data, user_index):
     print(f"Profile name sekarang: {user_data[user_index][3]}")
     
     while True:
-        new_name = input("Silahkan masukkan Profile Name baru anda: ").strip()
+        nama_baru = input("Silahkan masukkan Profile Name baru anda: ").strip()
         
-        if new_name == "":
+        if nama_baru == "":
             print("Nama tidak boleh kosong")
-        elif "|" in new_name:
+        elif "|" in nama_baru:
             print('Nama tidak boleh mengandung "|"')
-        elif user_data[user_index][3] == new_name:
+        elif user_data[user_index][3] == nama_baru:
             print("Nama sama. Silakan masukkan nama baru")
         else: 
             # Mengganti nama di data_user.txt
-            user_data[user_index][3] = new_name
-            write_data("data/data_user.txt", user_data)
+            user_data[user_index][3] = nama_baru
+            tulis_data("data/data_user.txt", user_data)
 
             # Mengganti nama di comment.txt
-            comments = read_data("data/comment.txt")
-            for comment in comments:
-                if comment[2] == user_data[user_index][0]:
-                    comment[1] = new_name
-            write_data("data/comment.txt", comments)
+            komentar = baca_data("data/comment.txt")
+            for kom in komentar:
+                if kom[2] == user_data[user_index][0]:
+                    kom[1] = nama_baru
+            tulis_data("data/comment.txt", komentar)
             
             print(f"Profile Name berhasil diganti")
             break
 
 # Data resep pribadi user
-def get_user_personal_recipes(user_index, user_data):
-    all_recipes = read_data("data/resep_user.txt")
-    user_recipes = []
+def ambil_resep_pribadi_user(user_index, user_data):
+    semua_resep = baca_data("data/resep_user.txt")
+    resep_user = []
     
-    for recipe in all_recipes:
-        if recipe[0] == user_data[user_index][0]:
-            user_recipes.append(recipe)
+    for resep in semua_resep:
+        if resep[0] == user_data[user_index][0]:
+            resep_user.append(resep)
     
-    return user_recipes
+    return resep_user
 
 # Detail resep pribadi user
-def show_personal_recipe_detail(recipe_name):
-    recipes = read_data("data/resep_user.txt")
+def tampil_detail_resep_pribadi(nama_resep):
+    resep_data = baca_data("data/resep_user.txt")
     
-    for recipe in recipes:
-        if recipe[1] == recipe_name:
-            recipe_data = {
-                "nama": recipe[1],
-                "bahan": recipe[2].split(";"),
-                "langkah": recipe[3].split(";")
+    for resep in resep_data:
+        if resep[1] == nama_resep:
+            resep_detail = {
+                "nama": resep[1],
+                "bahan": resep[2].split(";"),
+                "langkah": resep[3].split(";")
             }
-            show_recipe_detail(recipe_data)
+            tampil_detail_resep(resep_detail)
             break
 
 # Hapus resep pribadi
-def delete_personal_recipe(user_index, user_data, recipe_name):
-    all_recipes = read_data("data/resep_user.txt")
+def hapus_resep_pribadi(user_index, user_data, nama_resep):
+    semua_resep = baca_data("data/resep_user.txt")
     
-    for i in range(len(all_recipes)):
-        if (user_data[user_index][0] == all_recipes[i][0] and 
-            recipe_name == all_recipes[i][1]):
-            all_recipes.pop(i)
-            write_data("data/resep_user.txt", all_recipes)
+    for i in range(len(semua_resep)):
+        if (user_data[user_index][0] == semua_resep[i][0] and 
+            nama_resep == semua_resep[i][1]):
+            semua_resep.pop(i)
+            tulis_data("data/resep_user.txt", semua_resep)
             print("Resep pribadi berhasil dihapus!")
             break
 
 # Resep pribadi di profile
-def manage_personal_recipes(user_index, user_data):
+def kelola_resep_pribadi(user_index, user_data):
     while True:
-        user_recipes = get_user_personal_recipes(user_index, user_data)
+        resep_user = ambil_resep_pribadi_user(user_index, user_data)
         
-        if not user_recipes:
+        if len(resep_user) == 0:
             print("\nBelum ada Resep Pribadi!!")
             return
         
         print("\nResep Pribadimu:")
-        for i in range(len(user_recipes)):
-            print(f"{i+1}. {user_recipes[i][1]}")
-        print(f"{len(user_recipes)+1}. Back")
+        for i in range(len(resep_user)):
+            print(f"{i+1}. {resep_user[i][1]}")
+        print(f"{len(resep_user)+1}. Back")
         
-        last_selected = None
-        
-        choice = input("Pilihanmu: ").strip()
-        if choice.isdigit():
-            choice = int(choice) - 1
+        pilihan = input("Pilihanmu: ").strip()
+        if pilihan.isdigit():
+            pilihan = int(pilihan) - 1
             
-            if choice == len(user_recipes):  # Back
+            if pilihan == len(resep_user):  # Back
                 return
-            elif choice in range(len(user_recipes)):
-                show_personal_recipe_detail(user_recipes[choice][1])
-                last_selected = user_recipes[choice][1]
+            elif pilihan >= 0 and pilihan < len(resep_user):
+                tampil_detail_resep_pribadi(resep_user[pilihan][1])
+                resep_terpilih = resep_user[pilihan][1]
                 
                 # Tanya apakah mau hapus
-                delete_choice = input("\nApakah ingin menghapus resep ini? (y/n): ").strip().lower()
-                if delete_choice == 'y':
-                    delete_personal_recipe(user_index, user_data, last_selected)
+                pilihan_hapus = input("\nApakah ingin menghapus resep ini? (y/n): ").strip().lower()
+                if pilihan_hapus == 'y':
+                    hapus_resep_pribadi(user_index, user_data, resep_terpilih)
             else:
                 print("Pilihan tidak ditemukan")
         else:
             print("Pilihan tidak ditemukan")
 
 # Menu profile
-def profile_menu(user_index, user_data):
+def menu_profile(user_index, user_data):
     while True:
         print(f"\n========== PROFILE ==========")
         print(f"Profile Name: {user_data[user_index][3]}")
@@ -115,33 +113,33 @@ def profile_menu(user_index, user_data):
         print("3. Mengubah Profile Name")
         print("4. Back")
         
-        choice = input("Pilihanmu: ").strip()
+        pilihan = input("Pilihanmu: ").strip()
         
-        if choice == "1":
-            bookmark_menu(user_index, user_data)
-        elif choice == "2":
-            manage_personal_recipes(user_index, user_data)
-        elif choice == "3":
-            change_profile_name(user_data, user_index)
-        elif choice == "4":
+        if pilihan == "1":
+            menu_bookmark(user_index, user_data)
+        elif pilihan == "2":
+            kelola_resep_pribadi(user_index, user_data)
+        elif pilihan == "3":
+            ganti_nama_profile(user_data, user_index)
+        elif pilihan == "4":
             break
         else:
             print("Pilihan tidak ditemukan")
 
-def bookmark_menu(user_index, user_data):
+def menu_bookmark(user_index, user_data):
     while True:
         print("\n1. Melihat Bookmark")
         print("2. Menghapus Bookmark")
         print("3. Back")
         
-        choice = input("Pilihanmu: ").strip()
+        pilihan = input("Pilihanmu: ").strip()
         
-        if choice == "1":
-            if bookmark.show_user_bookmarks(user_index, user_data):
-                bookmark.choose_bookmark(user_index, user_data)
-        elif choice == "2":
-            bookmark.delete_bookmark(user_index, user_data)
-        elif choice == "3":
+        if pilihan == "1":
+            if bookmark.tampil_bookmark_user(user_index, user_data):
+                bookmark.pilih_bookmark_user(user_index, user_data)
+        elif pilihan == "2":
+            bookmark.hapus_bookmark(user_index, user_data)
+        elif pilihan == "3":
             break
         else:
             print("Pilihan tidak ditemukan")

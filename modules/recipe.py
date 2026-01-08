@@ -1,166 +1,172 @@
-from utils.file_utils import *
-from . import comment, bookmark
+from utils.file_utils import baca_baris, baca_csv, baca_data, tambah_data, tulis_data
 
 # Fungsi menampilkan bahan
-def show_ingredients():
-    ingredients = read_lines("data/bahan.txt")
+def tampil_bahan():
+    bahan = baca_baris("data/bahan.txt")
     print("\n=== PILIH BAHAN YANG KAMU PUNYA ===")
-    for i in range(len(ingredients)):
-        print(str(i+1) + ". " + ingredients[i])
-    return ingredients
+    for i in range(len(bahan)):
+        print(str(i+1) + ". " + bahan[i])
+    return bahan
 
 # Fungsi memilih bahan
-def choose_ingredients(ingredients):
-    choices = input("Masukkan nomor bahan: ").split(",")
-    user_ingredients = []
+def pilih_bahan(bahan):
+    pilihan = input("Masukkan nomor bahan: ")
+    pilihan = pilihan.split(",")
+    bahan_user = []
 
-    for choice in choices:
-        if choice.strip().isdigit():
-            index = int(choice.strip()) - 1 
-            if 0 <= index < len(ingredients):
-                user_ingredients.append(ingredients[index])
+    for p in pilihan:
+        if p.strip().isdigit():
+            index = int(p.strip()) - 1 
+            if index >= 0 and index < len(bahan):
+                bahan_user.append(bahan[index])
 
-    return user_ingredients
+    return bahan_user
 
 # Fungsi cari resep
-def find_recipes(user_ingredients):
-    results = []
-    data = read_csv("data/resep.csv")
+def cari_resep(bahan_user):
+    hasil = []
+    data = baca_csv("data/resep.csv")
 
     for i in range(1, len(data)):
-        row = data[i]
-        main_ingredient = row[0]
-        name = row[1]
-        ingredients = row[2].split(";")
-        steps = row[3].split(";")
+        baris = data[i]
+        bahan_utama = baris[0]
+        nama = baris[1]
+        bahan = baris[2].split(";")
+        langkah = baris[3].split(";")
 
-        if main_ingredient not in user_ingredients:
+        if bahan_utama not in bahan_user:
             continue
 
-        match_count = 0
-        for ing in user_ingredients:
-            if ing in ingredients:
-                match_count += 1
+        cocok = 0
+        for b in bahan_user:
+            if b in bahan:
+                cocok += 1
 
-        results.append({
-            "nama": name,
-            "bahan": ingredients,
-            "langkah": steps,
-            "cocok": match_count
+        hasil.append({
+            "nama": nama,
+            "bahan": bahan,
+            "langkah": langkah,
+            "cocok": cocok
         })
 
-    return results
+    return hasil
 
 # TAMPILKAN DAFTAR RESEP
-def choose_recipe(results):
+def pilih_resep_dari_hasil(hasil):
     print("\n=== REKOMENDASI RESEP ===")
-    for i in range(len(results)):
-        print(str(i+1) + ". " + results[i]["nama"])
-    print(f"{len(results)+1}. Back" )
+    for i in range(len(hasil)):
+        print(str(i+1) + ". " + hasil[i]["nama"])
+    print(f"{len(hasil)+1}. Back" )
     
-    choice = input("Pilih nomor resep: ")
-    if choice.isdigit():
-        choice = int(choice) - 1
-        if choice == len(results):
+    pilih = input("Pilih nomor resep: ")
+    if pilih.isdigit():
+        pilih = int(pilih) - 1
+        if pilih == len(hasil):
             return None
-        elif 0 <= choice < len(results):
-            return results[choice]
+        elif pilih >= 0 and pilih < len(hasil):
+            return hasil[pilih]
     
     return None
 
 # DETAIL RESEP
-def show_recipe_detail(recipe):
+def tampil_detail_resep(resep):
     print("\n=== DETAIL RESEP ===")
-    print("Nama:", recipe["nama"])
+    print("Nama:", resep["nama"])
 
     print("\nBahan:")
-    for ingredient in recipe["bahan"]:
-        print("- " + ingredient)
+    for b in resep["bahan"]:
+        print("- " + b)
 
     print("\nLangkah Memasak:")
-    for i in range(len(recipe["langkah"])):
-        print(str(i+1) + ". " + recipe["langkah"][i])
+    for i in range(len(resep["langkah"])):
+        print(str(i+1) + ". " + resep["langkah"][i])
 
 # Alur pencarian resep
-def search_recipe_flow(index, data):
-    ingredients = show_ingredients()
-    user_ingredients = choose_ingredients(ingredients)
+def alur_cari_resep(index, data):
+    from modules import comment, bookmark
     
-    results = find_recipes(user_ingredients)
+    bahan = tampil_bahan()
+    bahan_user = pilih_bahan(bahan)
+    
+    hasil = cari_resep(bahan_user)
 
-    if len(results) == 0:
+    if len(hasil) == 0:
         print("Tidak ada resep yang cocok.")
     else:
         while True:
-            recipe = choose_recipe(results)
-            if recipe is None:
+            resep = pilih_resep_dari_hasil(hasil)
+            if resep is None:
                 break
             
-            show_recipe_detail(recipe)
+            tampil_detail_resep(resep)
             while True:
                 print("\n1. Melihat dan menulis comment")
                 print("2. Masukkan ke dalam Bookmark")
                 print("3. Back")
                 
-                choice = input("Pilih: ").strip()
-                if choice == "1":
-                    comment.manage_comments(recipe, index, data)
-                elif choice == "2":
-                    bookmark.add_bookmark(recipe, index, data)
-                elif choice == "3":
+                pilih = input("Pilih: ").strip()
+                if pilih == "1":
+                    comment.manage_comments(resep, index, data)
+                elif pilih == "2":
+                    bookmark.tambah_bookmark(resep, index, data)
+                elif pilih == "3":
                     break
                 else:
                     print("Pilihan tidak ditemukan")
 
 # Tambah resep pribadi
-def add_personal_recipe(index, data):
+def tambah_resep_pribadi(index, data):
     print("=== Tambah Resep Pribadi ===")
-    personal_recipes = read_data("data/resep_user.txt")
+    resep_pribadi = baca_data("data/resep_user.txt")
     
     while True:
-        recipe_name = input("Masukkan nama resep: ").strip()
-        exists = False
-        for recipe in personal_recipes:
-            if recipe_name == recipe[1]:
-                print("Resep sudah ada")
-                return
+        nama_resep = input("Masukkan nama resep: ").strip()
+        sudah_ada = False
+        for resep in resep_pribadi:
+            if nama_resep == resep[1]:
+                sudah_ada = True
+                break
         
-        if recipe_name == "":
+        if sudah_ada:
+            print("Resep sudah ada")
+            return
+        
+        if nama_resep == "":
             print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
         else:
             break
     
     while True:
-        ingredients = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
-        if ingredients == "":
+        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
+        if bahan_resep == "":
             print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
         else:
             break
     
     while True:
-        steps = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
-        if steps == "":
+        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
+        if langkah_resep == "":
             print("Langkah-langkah tidak boleh kosong. Silakan masukkan langkah kembali")
         else:
             break
     
-    recipe = {
-        "nama": recipe_name,
-        "bahan": ingredients.split(";"),
-        "langkah": steps.split(";")
+    resep = {
+        "nama": nama_resep,
+        "bahan": bahan_resep.split(";"),
+        "langkah": langkah_resep.split(";")
     }
     
-    show_recipe_detail(recipe)
+    tampil_detail_resep(resep)
     print("="*50)
     print("1. Simpan resep")
     print("2. Hapus resep")
-    confirm = input("Pilihanmu: ").strip()
+    konfirmasi = input("Pilihanmu: ").strip()
     
-    if confirm == "1":
-        new_recipe = f"{data[index][0]}|{recipe_name}|{ingredients}|{steps}"
-        append_data("data/resep_user.txt", new_recipe)
+    if konfirmasi == "1":
+        resep_baru = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
+        tambah_data("data/resep_user.txt", resep_baru)
         print("\nResep berhasil di tambahkan")
-    elif confirm == "2":
+    elif konfirmasi == "2":
         print("Resep batal disimpan")
     else:
         print("Pilihan tidak ditemukan")

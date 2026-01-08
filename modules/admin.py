@@ -1,107 +1,110 @@
-from utils.file_utils import *
-from .recipe import show_recipe_detail
+from utils.file_utils import baca_baris, baca_csv, tulis_csv, tambah_data
+from .recipe import tampil_detail_resep
 
 # List resep.csv
-def get_recipe_list():
-    return read_csv("data/resep.csv")
+def ambil_daftar_resep():
+    return baca_csv("data/resep.csv")
 
 # Tambah resep admin
-def add_admin_recipe():
+def tambah_resep_admin():
     print("=== Tambah Resep ===")
-    ingredients = read_lines("data/bahan.txt")
+    bahan = baca_baris("data/bahan.txt")
     
     # Bahan dasar
     while True:
         print("Pilih Bahan Dasar")
-        for i in range(len(ingredients)):
-            print(str(i+1) + ". " + ingredients[i])
+        for i in range(len(bahan)):
+            print(str(i+1) + ". " + bahan[i])
         
-        choice = input("Pilihanmu: ").strip()
+        pilihan = input("Pilihanmu: ").strip()
         
-        if choice.isdigit():
-            choice = int(choice) - 1
-            if 0 <= choice < len(ingredients):
-                main_ingredient = ingredients[choice]
+        if pilihan.isdigit():
+            pilihan = int(pilihan) - 1
+            if pilihan >= 0 and pilihan < len(bahan):
+                bahan_dasar = bahan[pilihan]
                 break
         print("Pilihan tidak ditemukan")
     
     # Nama resep
-    recipes = get_recipe_list()[1:]  # Skip header
+    resep_list = ambil_daftar_resep()
+    resep_list = resep_list[1:]  # Skip header
+    
     while True:
-        recipe_name = input("Masukkan nama resep: ").strip()
-        exists = False
+        nama_resep = input("Masukkan nama resep: ").strip()
+        nama_sama = False
         
-        for recipe in recipes:
-            if recipe_name == recipe[1]:
+        for resep in resep_list:
+            if nama_resep == resep[1]:
                 print("Resep sudah ada. Silakan masukkan nama resep kembali")
-                exists = True
+                nama_sama = True
                 break
         
-        if not exists:
-            if recipe_name == "":
+        if not nama_sama:
+            if nama_resep == "":
                 print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
             else:
                 break
     
     # Bahan-bahan 
     while True:
-        recipe_ingredients = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
-        if recipe_ingredients == "":
+        bahan_resep = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
+        if bahan_resep == "":
             print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
         else:
             break
     
     # Langkah-langkah
     while True:
-        steps = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
-        if steps == "":
+        langkah_resep = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
+        if langkah_resep == "":
             print("Langkah-langkah tidak boleh kosong. Silakan masukkan langkah kembali")
         else:
             break
     
-    recipe_data = {
-        "nama": recipe_name,
-        "bahan": recipe_ingredients.split(";"),
-        "langkah": steps.split(";")
+    resep_data = {
+        "nama": nama_resep,
+        "bahan": bahan_resep.split(";"),
+        "langkah": langkah_resep.split(";")
     }
     
-    show_recipe_detail(recipe_data)
+    tampil_detail_resep(resep_data)
     print("="*50)
     print("1. Simpan resep")
     print("2. Hapus resep")
-    confirm = input("Pilihanmu: ").strip()
+    konfirmasi = input("Pilihanmu: ").strip()
     
-    if confirm == "1":
-        new_recipe = f"{main_ingredient},{recipe_name},{recipe_ingredients},{steps}"
-        append_data("data/resep.csv", new_recipe)
+    if konfirmasi == "1":
+        resep_baru = f"{bahan_dasar},{nama_resep},{bahan_resep},{langkah_resep}"
+        tambah_data("data/resep.csv", resep_baru)
         print("\nResep berhasil di tambahkan")
-    elif confirm == "2":
+    elif konfirmasi == "2":
         print("Resep batal disimpan")
     else:
         print("Pilihan tidak ditemukan")
 
 # Hapus resep admin
-def delete_admin_recipe():
-    recipes = get_recipe_list()[1:]  # Skip header
+def hapus_resep_admin():
+    resep_list = ambil_daftar_resep()
+    resep_list = resep_list[1:]  # Skip header
     
-    if not recipes:
+    if len(resep_list) == 0:
         print("Tidak ada resep untuk dihapus")
         return
     
     print("Pilih resep yang ingin dihapus: ")
-    for i in range(len(recipes)):
-        print(f"{i+1}. {recipes[i][1]}")
+    for i in range(len(resep_list)):
+        print(f"{i+1}. {resep_list[i][1]}")
     
-    choice = input("Pilihanmu: ").strip()
+    pilihan = input("Pilihanmu: ").strip()
     
-    if choice.isdigit():
-        choice = int(choice) - 1
-        if 0 <= choice < len(recipes):
-            recipes.pop(choice)
+    if pilihan.isdigit():
+        pilihan = int(pilihan) - 1
+        if pilihan >= 0 and pilihan < len(resep_list):
+            resep_list.pop(pilihan)
             
             # Write back with header
             header = ["bahan_dasar", "nama_resep", "bahan_tambahan", "langkah-langkah"]
-            write_csv("data/resep.csv", recipes, header)
+            tulis_csv("data/resep.csv", resep_list, header)
             print("Resep berhasil dihapus!")
         else:
             print("Pilihan tidak ditemukan")
@@ -109,114 +112,68 @@ def delete_admin_recipe():
         print("Pilihan tidak ditemukan")
 
 # Mengubah resep admin
-def edit_admin_recipe():
-    recipes = get_recipe_list()[1:]  # Skip header
+def ubah_resep_admin():
+    resep_list = ambil_daftar_resep()
+    resep_list = resep_list[1:]  # Skip header
     
-    if not recipes:
+    if len(resep_list) == 0:
         print("Tidak ada resep untuk diubah")
         return
     
     print("Pilih resep yang ingin diubah: ")
-    for i in range(len(recipes)):
-        print(f"{i+1}. {recipes[i][1]}")
+    for i in range(len(resep_list)):
+        print(f"{i+1}. {resep_list[i][1]}")
     
-    choice = input("Pilihanmu: ").strip()
+    pilihan = input("Pilihanmu: ").strip()
     
-    if choice.isdigit():
-        choice = int(choice) - 1
-        if 0 <= choice < len(recipes):
+    if pilihan.isdigit():
+        pilihan = int(pilihan) - 1
+        if pilihan >= 0 and pilihan < len(resep_list):
             while True:
-                recipe_data = {
-                    "nama": recipes[choice][1],
-                    "bahan": recipes[choice][2].split(";"),
-                    "langkah": recipes[choice][3].split(";")
+                resep_data = {
+                    "nama": resep_list[pilihan][1],
+                    "bahan": resep_list[pilihan][2].split(";"),
+                    "langkah": resep_list[pilihan][3].split(";")
                 }
                 
-                show_recipe_detail(recipe_data)
+                tampil_detail_resep(resep_data)
                 print("\nYang ingin diubah:")
                 print("1. Nama resep")
                 print("2. Bahan-bahan")
                 print("3. Langkah-langkah")
                 print("4. Selesai")
                 
-                edit_choice = input("Pilihanmu: ").strip()
+                pilihan_ubah = input("Pilihanmu: ").strip()
                 
-                if edit_choice == "1":
+                if pilihan_ubah == "1":
                     while True:
-                        new_name = input("Masukkan nama resep: ").strip()
-                        exists = False
+                        nama_baru = input("Masukkan nama resep: ").strip()
+                        nama_sama = False
                         
-                        for i, recipe in enumerate(recipes):
-                            if i != choice and new_name == recipe[1]:
+                        for i, resep in enumerate(resep_list):
+                            if i != pilihan and nama_baru == resep[1]:
                                 print("Nama resep sama. Silakan masukkan nama resep kembali")
-                                exists = True
+                                nama_sama = True
                                 break
                         
-                        if not exists:
-                            if new_name == "":
+                        if not nama_sama:
+                            if nama_baru == "":
                                 print("Nama resep tidak boleh kosong. Silakan masukkan nama resep kembali")
                             else:
-                                recipes[choice][1] = new_name
+                                resep_list[pilihan][1] = nama_baru
                                 break
-                elif edit_choice == "2":
+                elif pilihan_ubah == "2":
                     while True:
-                        new_ingredients = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
-                        if new_ingredients == "":
+                        bahan_baru = input("Masukkan bahan-bahan (pisahkan dengan titik koma ';'): ").strip()
+                        if bahan_baru == "":
                             print("Bahan-bahan tidak boleh kosong. Silakan masukkan bahan kembali")
                         else:
-                            recipes[choice][2] = new_ingredients
+                            resep_list[pilihan][2] = bahan_baru
                             break
-                elif edit_choice == "3":
+                elif pilihan_ubah == "3":
                     while True:
-                        new_steps = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
-                        if new_steps == "":
+                        langkah_baru = input("Masukkan langkah-langkah (pisahkan dengan titik koma ';'): ").strip()
+                        if langkah_baru == "":
                             print("Langkah-langkah tidak boleh kosong. Silakan masukkan langkah kembali")
                         else:
-                            recipes[choice][3] = new_steps
-                            break
-                elif edit_choice == "4":
-                    break
-                else:
-                    print("Pilihan tidak ditemukan")
-            
-            # Tampilkan hasil
-            recipe_data = {
-                "nama": recipes[choice][1],
-                "bahan": recipes[choice][2].split(";"),
-                "langkah": recipes[choice][3].split(";")
-            }
-            show_recipe_detail(recipe_data)
-            
-            # Simpan perubahan
-            header = ["bahan_dasar", "nama_resep", "bahan_tambahan", "langkah-langkah"]
-            write_csv("data/resep.csv", recipes, header)
-            print("Resep berhasil diubah!")
-        else:
-            print("Pilihan tidak ditemukan")
-    else:
-        print("Pilihan tidak ditemukan")
-
-# Menu admin
-def admin_menu(index, data):
-    while True:
-        print(f"\n=== Halo Admin {data[index][3]}, Selamat datang di Mira Apps ===")
-        print("My Intelligence Recipe Assistant")
-        print("\nApa yang ingin kamu lakukan sekarang?")
-        print("1. Menambah resep")
-        print("2. Menghapus resep")
-        print("3. Mengubah resep")
-        print("4. Log Out")
-        
-        choice = input("Pilihanmu: ").strip()
-        
-        if choice == "1":
-            add_admin_recipe()
-        elif choice == "2":
-            delete_admin_recipe()
-        elif choice == "3":
-            edit_admin_recipe()
-        elif choice == "4":
-            print("Terimakasih telah menggunakan Mira Apps\n")
-            break
-        else:
-            print("Pilihan tidak ditemukan")
+                            resep

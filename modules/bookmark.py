@@ -1,115 +1,106 @@
-from utils.file_utils import *
-from . import recipe
+from utils.file_utils import baca_data, tambah_data, tulis_data
+from .recipe import tampil_detail_resep
 
 # Fungsi mengambil data bookmark
-def get_bookmarks():
-    return read_data("data/bookmark.txt")
+def ambil_bookmark():
+    return baca_data("data/bookmark.txt")
 
 # Cek isi bookmark apakah sudah ada
-def check_bookmark_exists(recipe, user_index, user_data):
-    bookmarks = get_bookmarks()
+def cek_bookmark_ada(resep, user_index, user_data):
+    bookmark = ambil_bookmark()
     
-    for bookmark in bookmarks:
-        if bookmark[0] == user_data[user_index][0] and bookmark[1] == recipe["nama"]:
+    for bm in bookmark:
+        if bm[0] == user_data[user_index][0] and bm[1] == resep["nama"]:
             return True
     return False
 
 # Memasukkan resep ke bookmark
-def add_bookmark(recipe, user_index, user_data):
-    exists = check_bookmark_exists(recipe, user_index, user_data)
+def tambah_bookmark(resep, user_index, user_data):
+    sudah_ada = cek_bookmark_ada(resep, user_index, user_data)
     
-    if not exists:
-        append_data("data/bookmark.txt", f"{user_data[user_index][0]}|{recipe['nama']}")
+    if not sudah_ada:
+        tambah_data("data/bookmark.txt", f"{user_data[user_index][0]}|{resep['nama']}")
         print("Resep berhasil dimasukkan ke dalam bookmark")
     else:
         print("Resep sudah ada di bookmark")
 
 # Isi bookmark user
-def get_user_bookmarks(user_index, user_data):
-    all_bookmarks = get_bookmarks()
-    user_bookmarks = []
+def ambil_bookmark_user(user_index, user_data):
+    semua_bookmark = ambil_bookmark()
+    bookmark_user = []
     
-    for bookmark in all_bookmarks:
+    for bookmark in semua_bookmark:
         if bookmark[0] == user_data[user_index][0]:
-            user_bookmarks.append(bookmark)
+            bookmark_user.append(bookmark)
     
-    return user_bookmarks
+    return bookmark_user
 
 # Buka detail resep dari bookmark
-def show_bookmark_detail(recipe_name):
-    recipes = read_csv("data/resep.csv")
+def tampil_detail_bookmark(nama_resep):
+    resep_data = baca_csv("data/resep.csv")
     
-    for recipe in recipes[1:]:
-        if recipe[1] == recipe_name:
-            recipe_data = {
-                "nama": recipe[1],
-                "bahan": recipe[2].split(";"),
-                "langkah": recipe[3].split(";")
+    for resep in resep_data[1:]:
+        if resep[1] == nama_resep:
+            resep_detail = {
+                "nama": resep[1],
+                "bahan": resep[2].split(";"),
+                "langkah": resep[3].split(";")
             }
-            print("\n=== DETAIL RESEP ===")
-            print("Nama:", recipe_data["nama"])
-            
-            print("\nBahan:")
-            for ingredient in recipe_data["bahan"]:
-                print("- " + ingredient)
-            
-            print("\nLangkah Memasak:")
-            for i in range(len(recipe_data["langkah"])):
-                print(str(i+1) + ". " + recipe_data["langkah"][i])
+            tampil_detail_resep(resep_detail)
             break
 
 # Tampilkan bookmark di profile
-def show_user_bookmarks(user_index, user_data):
-    user_bookmarks = get_user_bookmarks(user_index, user_data)
+def tampil_bookmark_user(user_index, user_data):
+    bookmark_user = ambil_bookmark_user(user_index, user_data)
     
-    if not user_bookmarks:
+    if len(bookmark_user) == 0:
         print("\nBelum ada Bookmark!!")
         return False
     
     print("\nBookmarkmu:")
-    for i in range(len(user_bookmarks)):
-        print(f"{i+1}. {user_bookmarks[i][1]}")
+    for i in range(len(bookmark_user)):
+        print(f"{i+1}. {bookmark_user[i][1]}")
     
     return True
 
 # Pilih bookmark user
-def choose_bookmark(user_index, user_data):
-    user_bookmarks = get_user_bookmarks(user_index, user_data)
-    choice = input("Pilihanmu: ").strip()
+def pilih_bookmark_user(user_index, user_data):
+    bookmark_user = ambil_bookmark_user(user_index, user_data)
+    pilihan = input("Pilihanmu: ").strip()
     
-    if choice.isdigit():
-        choice = int(choice) - 1
-        if 0 <= choice < len(user_bookmarks):
-            show_bookmark_detail(user_bookmarks[choice][1])
+    if pilihan.isdigit():
+        pilihan = int(pilihan) - 1
+        if pilihan >= 0 and pilihan < len(bookmark_user):
+            tampil_detail_bookmark(bookmark_user[pilihan][1])
         else:
             print("Pilihan tidak ditemukan")
     else:
         print("Pilihan tidak ditemukan")
 
 # Hapus bookmark
-def delete_bookmark(user_index, user_data):
-    all_bookmarks = get_bookmarks()
-    user_bookmarks = get_user_bookmarks(user_index, user_data)
+def hapus_bookmark(user_index, user_data):
+    semua_bookmark = ambil_bookmark()
+    bookmark_user = ambil_bookmark_user(user_index, user_data)
     
-    if not user_bookmarks:
+    if len(bookmark_user) == 0:
         print("Belum ada bookmark")
         return
     
-    if show_user_bookmarks(user_index, user_data):
-        choice = input("Pilihanmu: ").strip()
+    if tampil_bookmark_user(user_index, user_data):
+        pilihan = input("Pilihanmu: ").strip()
         
-        if choice.isdigit():
-            choice = int(choice) - 1
-            if 0 <= choice < len(user_bookmarks):
+        if pilihan.isdigit():
+            pilihan = int(pilihan) - 1
+            if pilihan >= 0 and pilihan < len(bookmark_user):
                 # Hapus dari list
-                for i in range(len(all_bookmarks)):
-                    if (user_data[user_index][0] == all_bookmarks[i][0] and 
-                        user_bookmarks[choice][1] == all_bookmarks[i][1]):
-                        all_bookmarks.pop(i)
+                for i in range(len(semua_bookmark)):
+                    if (user_data[user_index][0] == semua_bookmark[i][0] and 
+                        bookmark_user[pilihan][1] == semua_bookmark[i][1]):
+                        semua_bookmark.pop(i)
                         break
                 
                 # Tulis ulang file
-                write_data("data/bookmark.txt", all_bookmarks)
+                tulis_data("data/bookmark.txt", semua_bookmark)
                 print("Resep berhasil dihapus")
             else:
                 print("Pilihan tidak ditemukan")

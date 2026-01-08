@@ -2,3 +2,4 @@ danish.cihuy|danish@gmail.com|123|Danish Cihuy
 testing|test@gmail.com|test123|Test
 akbar04|akbar@gmail.com|123|Akbar M
 akbarr4|bakz@gmail.co.id|321!A|Akbar M
+coba|coba@gmail.com|123|dil
