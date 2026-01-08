@@ -1,2 +1,5 @@
 testing|Nasi Padang|5 siung bawang;Nasi;Ayam|Cuci bahan;rebus ayam;Selesai
 testing|Kentang Rebus|kentang;air;garam|cuci kentang;kupas kentang;potong kentang;rebus air sampai mendidih;masukan garam secukupnya;masukkan kentang yang sudah dipotong;tunggu 30 menit-1jam;selesai
+123|Ayam|Ayam;Air|Bersihkan Ayam;masak Ayam
+coba1|Tempe Goreng|Tempe;Minyak|Potong Tempe;Goreng Tempe
+coba1|Tahu Goreng|tahu;Minyak|Potong Tahu;Goreng Tahu

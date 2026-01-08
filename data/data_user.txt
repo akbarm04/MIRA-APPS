@@ -3,3 +3,6 @@ testing|test@gmail.com|test123|Test
 akbar04|akbar@gmail.com|123|Akbar M
 akbarr4|bakz@gmail.co.id|321!A|Akbar M
 coba|coba@gmail.com|123|dil
+fadhil|fadhil@gmail.com|123|fadhil
+123|syamil@gmail.com|123|syamil
+coba1|coba1@gmail.com|123|fadhil

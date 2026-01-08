@@ -124,16 +124,6 @@ def tambah_resep_pribadi(index, data, dari_profile=True):
     }
     detail_resep(resep)
 
-    confirm = input("="*50 + "\n1. Simpan resep\n2. Hapus resep\nPilihanmu: ").strip()
-    if confirm == "1":
-        new_resep = f"{data[index][0]}|{nama_resep}|{bahan_resep}|{langkah_resep}"
-        from utils.file_utils import tambah_data
-        tambah_data("data/resep_user.txt", new_resep)
-        print("\nResep berhasil di tambahkan")
-    elif confirm == "2":
-        print("Resep batal disimpan")
-    else:
-        print("Pilihan tidak ditemukan")
 
 # Hapus resep pribadi
 def hapus_resep_pribadi(index, data, nama):
