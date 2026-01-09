@@ -1,2 +1,0 @@
-admin1|admin1@gmail.com|admin123|Danish A
-admin2|admin2@gmail.com|admin123|Akbar M
