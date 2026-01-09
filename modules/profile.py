@@ -66,7 +66,7 @@ def tambah_resep_pribadi(index, data, dari_profile=True):
         nama_resep = input("Masukkan nama resep: ").strip()
         nama_ada = False
         for i in range(len(list_resep_pribadi)):
-            if nama_resep == list_resep_pribadi[i][1]:
+            if nama_resep == list_resep_pribadi[i][1] and list_resep_pribadi[i][0] == data[index][0]:
                 print("Resep sudah ada")
                 nama_ada = True
                 break
