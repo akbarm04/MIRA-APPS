@@ -3,7 +3,7 @@ import time
 # Membaca List Resep #
 def BacaNamaResepCSV(NamaFile):
     NamaResep = []
-    with open(NamaFile, "r", encoding="utf-8") as f:
+    with open(NamaFile, "r") as f:
         Baris = f.readlines()
 
     for i in range(1, len(Baris)):
@@ -18,7 +18,7 @@ TimerResep = {
     "ayam goreng marinasi": 12,
     "perkedel kentang": 15,
     "mashed potatto creamy garlic": 20,
-    "telur balado": 8
+    "telur balado": 2
 }
 
 # Percobaan Timer #
