@@ -2,6 +2,10 @@
 
 from utils.file_utils import baca_data, tulis_data
 
+border = "─" * 45
+border2 = "=" * 45
+spasi = 45
+
 # Ganti Profile Name
 def change_name(data, index):
     print(f"Profile name sekarang: {data[index][3]}")
@@ -172,11 +176,13 @@ def profile_resep_pribadi(index, data):
 # Menu profile
 def menu_profile(user_index, user_data):
     while True:
-        print(f"\n========== PROFILE ==========")
+        print(f"\n\n\n{border}")
+        print(f"PROFILE".center(spasi))
+        print(border)
         print(f"Profile Name: {user_data[user_index][3]}")
         print(f"Username: @{user_data[user_index][0]}")
         print(f"Email: {user_data[user_index][1]}")
-        print("="*30)
+        print(border2)
         print("1. Bookmark")
         print("2. Resep Pribadi")
         print("3. Mengubah Profile Name")
