@@ -1,6 +1,9 @@
 from .validation import valid_email, valid_username
 from utils.file_utils import baca_data, tambah_data
 
+border = "─" * 45
+spasi = 45
+
 # Fungsi mencari index email
 def cari_index_email(list, cari):
     for i in range(len(list)):
@@ -22,7 +25,9 @@ def ambildata():
 # Fungsi login
 def login():
     data_user = ambildata()
-    print("\n=== Lakukan Login ===")
+    print(f"\n\n\n{border}")
+    print("Lakukan Login".center(spasi))
+    print(border)
     key_user = input("Masukkan Email atau Username: ").strip()
     
     if "@" in key_user:
@@ -51,7 +56,9 @@ def register():
     
     # Memasukkan email baru
     while True:
-        print("\n=== Lakukan Register ===")
+        print(f"\n\n\n{border}")
+        print("Lakukan Register".center(spasi))
+        print(border)
         new_email = input("Masukkan Email: ").strip()
         cek_email = valid_email(new_email)
         confirm_email = cari_index_email(data_user, new_email)
@@ -111,7 +118,9 @@ def ambil_data_admin():
 # Login untuk admin
 def login_admin():
     data_admin = ambil_data_admin()
-    print("\n=== Lakukan Login ===")
+    print(f"\n\n\n{border}")
+    print("Lakukan Login".center(spasi))
+    print(border)
     key_user = input("Masukkan Email atau Username: ").strip()
     
     if "@" in key_user:
