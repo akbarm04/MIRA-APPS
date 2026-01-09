@@ -2,10 +2,15 @@
 
 from utils.file_utils import baca_baris, baca_csv
 
+border = "─" * 45
+spasi = 45
+
 # Fungsi menampilkan bahan
 def tampil_bahan():
     bahan = baca_baris("data/bahan.txt")
-    print("\n=== PILIH BAHAN YANG KAMU PUNYA ===")
+    print(f"\n\n\n{border}")
+    print("PILIH BAHAN YANG KAMU PUNYA".center(spasi))
+    print(border)
     for i in range(len(bahan)):
         print(str(i+1) + ". " + bahan[i])
     return bahan
@@ -59,7 +64,9 @@ def cari_resep(bahan_user):
 
 # TAMPILKAN DAFTAR RESEP
 def pilih_resep(hasil):
-    print("\n=== REKOMENDASI RESEP ===")
+    print(f"\n\n\n{border}")
+    print("REKOMENDASI RESEP".center(spasi))
+    print(border)
     for i in range(len(hasil)):
         print(str(i+1) + ". " + hasil[i]["nama"])
     print(f"{len(hasil)+1}. Back" )
@@ -83,7 +90,9 @@ def pilih_resep(hasil):
 
 # DETAIL RESEP
 def detail_resep(resep):
-    print("\n=== DETAIL RESEP ===")
+    print(f"\n\n\n{border}")
+    print("DETAIL RESEP".center(spasi))
+    print(border)
     print("Nama:", resep["nama"])
     print("\nBahan:")
     for b in resep["bahan"]:
