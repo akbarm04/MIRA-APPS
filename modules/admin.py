@@ -31,7 +31,7 @@ def tambah_resep_admin():
             print("Pilihan tidak ditemukan")
 
     # Nama resep
-    list_reseps = list_resep()[1:]  # Skip header
+    list_reseps = list_resep()[1:]  
     
     while True:
         nama_resep = input("Masukkan nama resep: ").strip()
@@ -86,7 +86,7 @@ def tambah_resep_admin():
 
 # Hapus resep admin
 def hapus_resep_admin():
-    list_reseps = list_resep()[1:]  # Skip header
+    list_reseps = list_resep()[1:] 
     
     if len(list_reseps) == 0:
         print("Tidak ada resep untuk dihapus")
@@ -103,7 +103,6 @@ def hapus_resep_admin():
         if pilih_reseps in range(len(list_reseps)):
             list_reseps.pop(pilih_reseps)
             
-            # Write back with header
             header = ["bahan_dasar", "nama_resep", "bahan_tambahan", "langkah-langkah"]
             tulis_csv("data/resep.csv", list_reseps, header)
             print("Resep berhasil dihapus!")
@@ -114,7 +113,7 @@ def hapus_resep_admin():
 
 # Mengubah resep admin
 def ubah_resep_admin():
-    list_reseps = list_resep()[1:]  # Skip header
+    list_reseps = list_resep()[1:]  
     
     if len(list_reseps) == 0:
         print("Tidak ada resep untuk diubah")
