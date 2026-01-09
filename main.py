@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 #fungsi mencari index email
 def cari_index_email(list, cari):
     for i in range(len(list)):
@@ -904,14 +905,26 @@ def menu_mira(index, data):
             print("Pilihan tidak ditemukan")
 
 #program utama
+=======
+# program utama
+from modules.auth import login, register, login_admin
+from modules.user import menu_user
+from modules.admin import menu_admin
+
+>>>>>>> origin/fadhil-branch
 while True:
     print("=== Selamat Datang di Mira Apps ===")
     print("1. Kamu seorang Pengguna\n2. Kamu seorang Admin\n3. Keluar")
     pilih = input("Pilihanmu: ").strip()
+<<<<<<< HEAD
+=======
+    
+>>>>>>> origin/fadhil-branch
     if pilih == "1":
         while True:
             print("1. Login\n2. Register\n3. Back")
             pilih_user = input("Pilihanmu: ").strip()
+<<<<<<< HEAD
             if (pilih_user == "1"):
                 berhasil, index, data = login()
                 if berhasil:
@@ -923,13 +936,41 @@ while True:
                 break
             else:
                 print("Pilihan tidak ditemukan")
+=======
+            
+            if pilih_user == "1":
+                berhasil, index, data = login()
+                if berhasil:
+                    menu_user(index, data)
+                    
+            elif pilih_user == "2":
+                register()
+                
+            elif pilih_user == "3":
+                print("Selamat Tinggal")
+                break
+                
+            else:
+                print("Pilihan tidak ditemukan")
+                
+>>>>>>> origin/fadhil-branch
     elif pilih == "2":
         print("Ini Perintah Admin")
         berhasil, index, data = login_admin()
         if berhasil:
             menu_admin(index, data)
+<<<<<<< HEAD
     elif pilih == "3":
         print("Selamat Tinggal")
         break
     else:
         print("Pilihan tidak ditemukan")
+=======
+            
+    elif pilih == "3":
+        print("Selamat Tinggal")
+        break
+        
+    else:
+        print("Pilihan tidak ditemukan")
+>>>>>>> origin/fadhil-branch
