@@ -1,7 +1,12 @@
+border = "─" * 45
+spasi = 45
+
 def menu_user(index, data):
 
     while True:
-        print(f"\n=== Halo {data[index][3]}, Selamat datang di Mira Apps ===")
+        print(f"\n\n\n{border}")
+        print(f"Halo {data[index][3]}, Selamat datang di Mira Apps".center(spasi))
+        print(border)
         print("My Intelligence Recipe Assistant")
         print("\nApa yang ingin kamu lakukan sekarang?")
         print("1. Mencari resep")
