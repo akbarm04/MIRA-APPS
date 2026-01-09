@@ -3,13 +3,19 @@
 from utils.file_utils import baca_baris, baca_csv, tulis_csv, tambah_data
 from .recipe import detail_resep
 
+border = "─" * 45
+border2 = "=" * 45
+spasi = 45
+
 # List resep.csv
 def list_resep():
     return baca_csv("data/resep.csv")
 
 # Tambah resep admin
 def tambah_resep_admin():
-    print("=== Tambah Resep===")
+    print(f"\n\n\n{border2}")
+    print("Tambah Resep".center(spasi))
+    print(border2)
     list_bahan = baca_baris("data/bahan.txt")
 
     # Bahan dasar
@@ -207,7 +213,9 @@ def ubah_resep_admin():
 # Menu admin
 def menu_admin(index, data):
     while True:
-        print(f"\n=== Halo Admin {data[index][3]}, Selamat datang di Mira Apps ===")
+        print(f"\n\n\n{border}")
+        print(f"Halo Admin {data[index][3]}, Selamat datang di Mira Apps".center(spasi))
+        print(border)
         print("My Intelligence Recipe Assistant\n\nApa yang ingin kamu lakukan sekarang?")
         print("1. Menambah resep\n2. Menghapus resep\n3. Mengubah resep\n4. Log Out")
         
