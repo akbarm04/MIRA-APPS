@@ -1,6 +1,7 @@
 import pandas as pd
 import time
 
+# Membaca Resep #
 Resep = pd.read_csv("resep.csv")
 
 TimerResep = {}
@@ -13,21 +14,17 @@ for i in range(len(Resep)):
 print(TimerResep)
 
 # Fungsi Timer #
-
 def Timer(Menit):
     Detik = Menit * 60
 
-    print("Timer dimulai...")
-
     while Detik > 0:
-        print(f"{Detik//60:02d}:{Detik%60:02d}")
+        print(f"Sisa Waktu >> {Detik//60:02}:{Detik%60:02}")
         time.sleep(1)
         Detik -= 1
 
     print("Waktu habis!")
 
 # Utama #
-
 print("Daftar Resep:")
 for Nama in TimerResep:
     print("-", Nama)
