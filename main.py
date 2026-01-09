@@ -3,15 +3,21 @@ from modules.auth import login, register, login_admin
 from modules.user import menu_user
 from modules.admin import menu_admin
 
+border = "─" * 45
+spasi = 45
+
 while True:
-    print("=== Selamat Datang di Mira Apps ===")
+    print(f"\n\n\n{border}")
+    print("Selamat Datang di Mira Apps".center(spasi))
+    print(border)
     print("1. Kamu seorang Pengguna\n2. Kamu seorang Admin\n3. Keluar")
-    pilih = input("Pilihanmu: ").strip()
+
+    pilih = input("\nPilihanmu: ").strip()
     
     if pilih == "1":
         while True:
-            print("1. Login\n2. Register\n3. Back")
-            pilih_user = input("Pilihanmu: ").strip()
+            print("\n1. Login\n2. Register\n3. Back")
+            pilih_user = input("\nPilihanmu: ").strip()
             
             if pilih_user == "1":
                 berhasil, index, data = login()
